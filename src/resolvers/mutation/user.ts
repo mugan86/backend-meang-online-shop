@@ -1,4 +1,4 @@
-import { asignDocumentId, findOneElement } from './../../lib/db-operations';
+import { asignDocumentId, findOneElement, insertOneElement } from './../../lib/db-operations';
 import { IResolvers } from 'graphql-tools';
 import { COLLECTIONS } from './../../config/constants';
 import bcrypt from 'bcrypt';
@@ -23,9 +23,7 @@ const resolversUserMutation: IResolvers = {
       // Encriptar password
       user.password = bcrypt.hashSync(user.password, 10);
       // Guardar el documento (registro) en la colección
-      return await db
-        .collection(COLLECTIONS.USERS)
-        .insertOne(user)
+      return await insertOneElement(db, COLLECTIONS.USERS, user)
         .then(async () => {
           return {
             status: true,
