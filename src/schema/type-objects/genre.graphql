@@ -1,0 +1,6 @@
+"Tipo de objeto para almacenar la información de generos de videojuegos"
+type Genre implements Item {
+    id: ID!
+    name: String!
+    slug: String!
+}
