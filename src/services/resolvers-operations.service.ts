@@ -27,7 +27,7 @@ class ResolversOperationsService {
         }
     }
     // Obtener detalles del item
-
+    
     // Añadir item
 
     // Modificar item
