@@ -12,7 +12,7 @@ class ResolversOperationsService {
         this.variables = variables;
         this.context = context;
     }
-    protected getDb(): Db { return this.context.db;}
+    protected getDb(): Db { return this.context.db; }
     protected getVariables(): IVariables { return this.variables; }
     // Listar información
     protected async list(collection: string, listElement: string) {

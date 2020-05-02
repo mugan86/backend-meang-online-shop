@@ -20,7 +20,7 @@ export const asignDocumentId = async (
   if (lastElement.length === 0) {
     return 1;
   }
-  return lastElement[0].id + 1;
+  return +lastElement[0].id + 1;
 };
 
 

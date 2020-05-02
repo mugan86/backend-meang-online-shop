@@ -1,7 +1,9 @@
+import { asignDocumentId } from './../lib/db-operations';
 import ResolversOperationsService from './resolvers-operations.service';
 import { IContextData } from '../interfaces/context-data.interface';
 import { COLLECTIONS } from '../config/constants';
 import { findOneElement } from '../lib/db-operations';
+import slugify from 'slugify';
 
 class GenresService extends ResolversOperationsService {
     collection = COLLECTIONS.GENRES;
@@ -26,11 +28,17 @@ class GenresService extends ResolversOperationsService {
         }
         // COmprobar que no existe en la coleccion
         // Si Existe nos dará error que no podemos aññadir
-        if (this.checkGenreExist(genreName)) {
+        if (await this.checkGenreExist(genreName)) {
             return { status: false, message: 'Item definido ya existe. Prueba con otro', genre: null };
         }
-        // const result = await this.add(this.collection, {id: '84', name: 'Realidad Virtual', slug: 'realidad-virtual'}, 'genero');
-        // console.log(result);
+        // Asignar la información
+        const genreObject = {
+            id: await asignDocumentId(this.getDb(), COLLECTIONS.GENRES, { id: -1 }),
+            name: genreName,
+            slug: slugify( genreName, { lower: true})
+        };
+        const result = await this.add(this.collection, genreObject, 'genero');
+        return { status: result.status, message: result.message, genre: result.item};
     }
 
     private checkData(genre: string) {
