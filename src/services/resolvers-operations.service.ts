@@ -1,19 +1,14 @@
 import { IVariables } from './../interfaces/variables-interface';
 import { IContextData } from './../interfaces/context-data.interface';
-import {findElements, findOneElement, insertOneElement} from './../lib/db-operations';
-import { Db } from 'mongodb';
+import {findElements, findOneElement} from './../lib/db-operations';
 
 class ResolversOperationsService {
-    private root: object;
     private variables: IVariables;
     private context: IContextData;
     constructor(root: object, variables: IVariables, context: IContextData) {
-        this.root = root;
         this.variables = variables;
         this.context = context;
     }
-    protected getDb(): Db { return this.context.db; }
-    protected getVariables(): IVariables { return this.variables; }
     // Listar información
     protected async list(collection: string, listElement: string) {
         try {
@@ -59,33 +54,7 @@ class ResolversOperationsService {
         }
     }
     // Añadir item
-    protected async add(collection: string, document: object, label: string) {
-        try {
-            return await insertOneElement(this.context.db, collection, document).then(
-                (result ) => {
-                    if (result) {
-                        return {
-                            status: true,
-                            message: `Item con la información ${label} ha sido añadido correctamente`,
-                            item: document
-                        };
-                    }
-                    return {
-                        status: false,
-                        message: `Item con la información ${label} NO ha sido añadida. Prueba de nuevo por favor`,
-                        item: document
-                    };
-
-                }
-            );
-        } catch (error) {
-            return {
-                status: false,
-                message: `Item con la información ${label} NO ha sido añadida por un error inesperado. Prueba de nuevo por favor`,
-                item: document
-            };
-        }
-    }
+    
     // Modificar item
 
     // eliminar item
