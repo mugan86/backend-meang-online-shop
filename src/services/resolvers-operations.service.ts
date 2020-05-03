@@ -1,6 +1,7 @@
 import { IVariables } from './../interfaces/variables-interface';
 import { IContextData } from './../interfaces/context-data.interface';
-import {findElements, findOneElement} from './../lib/db-operations';
+import {findElements, findOneElement, insertOneElement} from './../lib/db-operations';
+import { Db } from 'mongodb';
 
 class ResolversOperationsService {
     private variables: IVariables;
@@ -9,6 +10,8 @@ class ResolversOperationsService {
         this.variables = variables;
         this.context = context;
     }
+    protected getDb(): Db { return this.context.db; }
+    protected getVariables(): IVariables { return this.variables; }
     // Listar información
     protected async list(collection: string, listElement: string) {
         try {
@@ -54,7 +57,32 @@ class ResolversOperationsService {
         }
     }
     // Añadir item
-    
+    protected async add(collection: string, document: object, item: string) {
+        try {
+            return await insertOneElement(this.context.db, collection, document).then(
+                res => {
+                    if (res.result.ok === 1) {
+                        return {
+                            status: true,
+                            message: `Añadido correctamente el ${item}.`,
+                            item: document
+                        };
+                    }
+                    return {
+                        status: false,
+                        message: `No se ha insertado el ${item}. Inténtalo de nuevo por favor`,
+                        item: null
+                    };
+                }
+            );
+        } catch (error) {
+            return {
+                status: false,
+                message: `Error inesperado al insertar el ${item}. Inténtalo de nuevo por favor`,
+                item: null
+            };
+        }
+    }
     // Modificar item
 
     // eliminar item

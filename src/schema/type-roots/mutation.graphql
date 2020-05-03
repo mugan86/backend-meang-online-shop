@@ -1,3 +1,4 @@
 type Mutation {
     register(user: UserInput!): ResultUser
+    addGenre(genre: String!): ResultGenre
 }
