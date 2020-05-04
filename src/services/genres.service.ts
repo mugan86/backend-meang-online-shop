@@ -3,7 +3,6 @@ import { findOneElement, asignDocumentId } from './../lib/db-operations';
 import ResolversOperationsService from './resolvers-operations.service';
 import { IContextData } from '../interfaces/context-data.interface';
 import slugify from 'slugify';
-import { filter } from 'compression';
 class GenresService extends ResolversOperationsService {
     collection = COLLECTIONS.GENRES;
     constructor(root: object, variables: object, context: IContextData) {
