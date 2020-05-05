@@ -1,4 +1,4 @@
-import { findOneElement } from './../lib/db-operations';
+import { findOneElement, asignDocumentId } from './../lib/db-operations';
 import { COLLECTIONS, EXPIRETIME, MESSAGES } from '../config/constants';
 import { IContextData } from '../interfaces/context-data.interface';
 import ResolversOperationsService from './resolvers-operations.service';
@@ -76,6 +76,43 @@ class UsersService extends ResolversOperationsService {
           }
     }
     // Registrar un usuario
+    async register( ) {
+      const user = this.getVariables().user;
+
+      // comprobar que user no es null
+      if (user === null) {
+        return {
+          status: false,
+          message: 'Usuario no definido, procura definirlo',
+          user: null
+        };
+      }
+      // Comprobar que el usuario no existe
+      const userCheck = await findOneElement(this.getDb(), this.collection, {email: user?.email});
+
+      if (userCheck !== null) {
+        return {
+          status: false,
+          message: `El email ${user?.email} está registrado y no puedes registrarte con este email`,
+          user: null
+        };
+      }
+
+      // COmprobar el último usuario registrado para asignar ID
+      user!.id = await asignDocumentId(this.getDb(), this.collection, { registerDate: -1 });
+      // Asignar la fecha en formato ISO en la propiedad registerDate
+      user!.registerDate = new Date().toISOString();
+      // Encriptar password
+      user!.password = bcrypt.hashSync(user!.password, 10);
+
+      const result = await this.add(this.collection, user || {}, 'usuario');
+      // Guardar el documento (registro) en la colección
+      return {
+        status: result.status,
+        message: result.message,
+        user: result.item
+      };
+    }
 }
 
 export default UsersService;
