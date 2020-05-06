@@ -87,6 +87,15 @@ class UsersService extends ResolversOperationsService {
           user: null
         };
       }
+      if (user?.password === null || 
+        user?.password === undefined ||
+        user?.password === '') {
+          return {
+            status: false,
+            message: 'Usuario sin password correcto, procura definirlo',
+            user: null
+          };
+        }
       // Comprobar que el usuario no existe
       const userCheck = await findOneElement(this.getDb(), this.collection, {email: user?.email});
 
@@ -111,6 +120,41 @@ class UsersService extends ResolversOperationsService {
         status: result.status,
         message: result.message,
         user: result.item
+      };
+    }
+    // Modificar un usuario
+    async modify() {
+      const user = this.getVariables().user;
+      // comprobar que user no es null
+      if (user === null) {
+        return {
+          status: false,
+          message: 'Usuario no definido, procura definirlo',
+          user: null
+        };
+      }
+      const filter = {id: user?.id };
+      const result = await this.update(this.collection, filter, user || {}, 'usuario');
+      return {
+        status: result.status,
+        message: result.message,
+        user: result.item
+      };
+    }
+    // Borrar el usuario seleccionado
+    async delete() {
+      const id = this.getVariables().id;
+      if (id === undefined || id === '') {
+        return {
+          status: false,
+          message: 'Identificador del usuario no definido, procura definirlo para eliminar el usuario',
+          user: null
+        };
+      }
+      const result = await this.del(this.collection, { id }, 'usuario');
+      return {
+        status: result.status,
+        message: result.message
       };
     }
 }
