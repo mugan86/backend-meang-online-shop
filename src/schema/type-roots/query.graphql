@@ -7,7 +7,7 @@ type Query {
     "Autenticarnos mediante token"
     me: ResultUser
     "Lista de géneros"
-    genres: ResultGenre
+    genres (page: Int = 1, itemsPage: Int = 20): ResultGenre
     "Item del género seleccionado"
     genre(id: ID!): ResultGenre
 }

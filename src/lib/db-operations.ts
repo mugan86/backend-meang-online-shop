@@ -1,4 +1,5 @@
 import { Db } from 'mongodb';
+import { IPaginationOptions } from '../interfaces/pagination-options.interface';
 
 /**
  * Obtener el ID que vamos a utilizar en el nuevo usuario
@@ -69,7 +70,26 @@ export const deleteOneElement = async (
 export const findElements = async (
   database: Db,
   collection: string,
-  filter: object = {}
+  filter: object = {},
+  paginationOptions: IPaginationOptions = {
+    page: 1,
+    pages: 1,
+    itemsPage: -1,
+    skip: 0,
+    total: -1
+  }
 ) => {
-  return await database.collection(collection).find(filter).toArray();
+  if (paginationOptions.total === -1) {
+    return await database.collection(collection).find(filter).toArray();
+  }
+  return await database.collection(collection).find(filter).limit(paginationOptions.itemsPage)
+                        .skip(paginationOptions.skip).toArray();
+};
+
+
+export const countElements = async (
+  database: Db,
+  collection: string
+) => {
+  return await database.collection(collection).countDocuments();
 };
