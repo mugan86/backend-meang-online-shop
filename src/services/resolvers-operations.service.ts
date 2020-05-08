@@ -28,6 +28,7 @@ class ResolversOperationsService {
   // Listar información
   protected async list(collection: string, listElement: string, page: number = 1, itemsPage: number = 20) {
     try {
+      console.log(page, itemsPage);
       const paginationData = await pagination(this.getDb(), collection, page, itemsPage);
       return {
         info: {
@@ -38,7 +39,7 @@ class ResolversOperationsService {
         },
         status: true,
         message: `Lista de ${listElement} correctamente cargada`,
-        items: await findElements(this.getDb(), collection),
+        items: await findElements(this.getDb(), collection, {}, paginationData),
       };
     } catch (error) {
       return {
