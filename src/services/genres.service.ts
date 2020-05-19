@@ -100,7 +100,7 @@ class GenresService extends ResolversOperationsService {
         return {
             status: result.status,
             message: (result.status) ? 'Bloqueado correctamente': 'No se ha bloqueado comprobarlo por favor'
-        }
+        };
     }
     private checkData(value: string) {
         return (value === '' || value === undefined) ? false: true;
