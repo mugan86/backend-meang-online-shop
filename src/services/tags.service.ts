@@ -22,56 +22,56 @@ class TagsService extends ResolversOperationsService {
     }
 
     async insert() {
-        const genre = this.getVariables().genre;
+        const tag = this.getVariables().tag;
         // Comprobar que no está en blanco ni es indefinido
-        if (!this.checkData(genre || '')) {
+        if (!this.checkData(tag || '')) {
             return {
                 status: false,
-                message: 'El género no se ha especificado correctamente',
-                genre: null
+                message: 'El tag no se ha especificado correctamente',
+                tag: null
             };
         }
         // COmprobar que no existe
-        if (await this.checkInDatabase(genre || '')) {
+        if (await this.checkInDatabase(tag || '')) {
             return {
                 status: false,
-                message: 'El género existe en la base de datos, intenta con otro género',
-                genre: null
+                message: 'El tag existe en la base de datos, intenta con otro tag',
+                tag: null
             };
         }
         // Si valida las opciones anteriores, venir aquí y crear el documento
-        const genreObject = {
+        const tagObject = {
             id: await asignDocumentId(this.getDb(), this.collection, { id: -1}),
-            name: genre,
-            slug: slugify(genre || '', { lower: true })
+            name: tag,
+            slug: slugify(tag || '', { lower: true })
         };
-        const result = await this.add(this.collection, genreObject, 'género');
-        return { status: result.status, message: result.message, genre: result.item };
+        const result = await this.add(this.collection, tagObject, 'tag');
+        return { status: result.status, message: result.message, tag: result.item };
     }
     async modify() {
         const id = this.getVariables().id;
-        const genre = this.getVariables().genre;
+        const tag = this.getVariables().tag;
         if (!this.checkData(String(id) || '')) {
             return {
                 status: false,
-                message: 'El ID del género no se ha especificado correctamente',
-                genre: null
+                message: 'El ID del tag no se ha especificado correctamente',
+                tag: null
             };
         }
-        if (!this.checkData(genre || '')) {
+        if (!this.checkData(tag || '')) {
             return {
                 status: false,
-                message: 'El género no se ha especificado correctamente',
-                genre: null
+                message: 'El tag no se ha especificado correctamente',
+                tag: null
             };
         }
         const objectUpdate = { 
-            name: genre,
-            slug: slugify(genre || '', {lower: true})
+            name: tag,
+            slug: slugify(tag || '', {lower: true})
         };
         
         const result = await this.update(this.collection, { id }, objectUpdate, 'genero');
-        return { status: result.status, message: result.message, genre: result.item };
+        return { status: result.status, message: result.message, tag: result.item };
     }
 
     async delete() {
@@ -79,8 +79,8 @@ class TagsService extends ResolversOperationsService {
         if (!this.checkData(String(id) || '')) {
             return {
                 status: false,
-                message: 'El ID del género no se ha especificado correctamente',
-                genre: null
+                message: 'El ID del tag no se ha especificado correctamente',
+                tag: null
             };
         }
         const result = await this.del(this.collection, { id }, 'genero');
@@ -92,11 +92,11 @@ class TagsService extends ResolversOperationsService {
         if (!this.checkData(String(id) || '')) {
             return {
                 status: false,
-                message: 'El ID del género no se ha especificado correctamente',
-                genre: null
+                message: 'El ID del tag no se ha especificado correctamente',
+                tag: null
             };
         }
-        const result = await this.update(this.collection, { id }, { active: false }, 'género');
+        const result = await this.update(this.collection, { id }, { active: false }, 'tag');
         return {
             status: result.status,
             message: (result.status) ? 'Bloqueado correctamente': 'No se ha bloqueado comprobarlo por favor'
