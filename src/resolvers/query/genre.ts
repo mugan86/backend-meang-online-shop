@@ -1,6 +1,5 @@
 import { IResolvers } from 'graphql-tools';
 import GenresService from '../../services/genres.service';
-import { pagination } from '../../lib/pagination';
 
 const resolversGenreQuery: IResolvers = {
     Query: {
