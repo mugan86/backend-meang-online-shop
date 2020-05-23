@@ -6,9 +6,9 @@ const resolversMailMutation: IResolvers = {
     async sendEmail() {
       return new Promise((resolve, reject) => {
         transport.sendMail({
-            from: '"Gamezonia Online Shop 👻" <gamezonia.online.shop@gmail.com>', // sender address
+            from: '"🕹️ Gamezonia Online Shop 🕹️" <gamezonia.online.shop@gmail.com>', // sender address
             to: 'mugan86@gmail.com', // list of receivers
-            subject: 'Hola ✔', // Subject line
+            subject: 'Hola', // Subject line
             // text: '<b>Hola Anartz</b>', // plain text body
             html: '<b>Hello world?</b>', // html body
           }, (error, _) => {
