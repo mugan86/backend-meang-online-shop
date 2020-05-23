@@ -10,4 +10,8 @@ type Query {
     genres (page: Int = 1, itemsPage: Int = 20): ResultGenre
     "Item del género seleccionado"
     genre(id: ID!): ResultGenre
+    "Lista de etiquetas (tags)"
+    tags (page: Int = 1, itemsPage: Int = 20): ResultTag
+    "Item del género seleccionado"
+    tag(id: ID!): ResultTag
 }

@@ -1,0 +1,12 @@
+"Tipo de objeto para almacenar la información de generos de videojuegos"
+type ResultTag implements Result {
+    info: ResultInfo
+    "Estado de la operación"
+    status: Boolean!
+    "Mensaje de la operación para dar feedback"
+    message: String!
+    "Información del tag (etiqueta) seleccionado"
+    tag: Tag
+    "Lista de tags (etiquetas) seleccionadas"
+    tags: [Tag!]
+}

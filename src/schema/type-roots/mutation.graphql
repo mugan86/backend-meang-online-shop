@@ -1,10 +1,17 @@
 type Mutation {
+    "Apartado de operaciones donde trabajamos con los usuarios"
     register(user: UserInput!): ResultUser
     updateUser(user: UserInput!): ResultUser
     deleteUser(id: ID!): ResultUser
     blockUser(id: ID!): ResultUser
+    "Apartado de operaciones donde trabajamos con los géneros"
     addGenre(genre: String!): ResultGenre
     updateGenre(id: ID!, genre: String!): ResultGenre
     deleteGenre(id: ID!): ResultGenre
     blockGenre(id: ID!): ResultGenre
+    "Apartado de operaciones donde trabajamos con los tags"
+    addTag(tag: String!): ResultTag
+    updateTag(id: ID!, tag: String!): ResultTag
+    deleteTag(id: ID!): ResultTag
+    blockTag(id: ID!): ResultTag
 }
