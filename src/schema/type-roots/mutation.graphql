@@ -16,4 +16,5 @@ type Mutation {
     blockTag(id: ID!): ResultTag
     "Envio de emails automáticos"
     sendEmail(mail: MailInput!): ResultMail
+    activeUserEmail(id: ID!, email: String!): ResultMail
 }
