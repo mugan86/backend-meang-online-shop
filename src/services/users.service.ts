@@ -175,8 +175,9 @@ class UsersService extends ResolversOperationsService {
       message: result.message,
     };
   }
-  async unblock(unblockValue: boolean = true, objectUpdateProperties: IUser = {email: '-'}) {
+  async unblock(unblockValue: boolean = true, objectUpdateProperties: IUser | undefined = undefined) {
     const id = this.getVariables().id;
+    console.log('unblock', unblockValue, objectUpdateProperties);
     if (!this.checkData(String(id) || '')) {
         return {
             status: false,
@@ -186,20 +187,23 @@ class UsersService extends ResolversOperationsService {
     }
     const action = (unblockValue) ? 'Desbloqueado' : 'Bloqueado';
     let update;
-    if (objectUpdateProperties === {email: '-'}) {
+    if (objectUpdateProperties === undefined) {
+      console.log('solo bloquear');
       update = {active: unblockValue};
     } else {
+      console.log('activar');
       // Comprobar la contraseña que es diferente a 1234
-      if (objectUpdateProperties.password === '1234') {
+      if (objectUpdateProperties?.password === '1234') {
         return {
           status: false,
           message: 'Cambia la contraseña para poder activar el usuario'
         };
       }
       // Encriptar
-      objectUpdateProperties.password = bcrypt.hashSync(objectUpdateProperties.password, 10);
+      objectUpdateProperties!.password = bcrypt.hashSync(objectUpdateProperties?.password, 10);
       update = Object.assign({}, {active: unblockValue}, objectUpdateProperties);
     }
+    console.log(update);
     const result = await this.update(this.collection, { id }, update, 'usuario');
     return {
         status: result.status,
