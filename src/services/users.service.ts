@@ -4,6 +4,7 @@ import { IContextData } from '../interfaces/context-data.interface';
 import ResolversOperationsService from './resolvers-operations.service';
 import bcrypt from 'bcrypt';
 import JWT from '../lib/jwt';
+import { IUser } from '../interfaces/user.interface';
 class UsersService extends ResolversOperationsService {
   private collection = COLLECTIONS.USERS;
   constructor(root: object, variables: object, context: IContextData) {
@@ -174,7 +175,7 @@ class UsersService extends ResolversOperationsService {
       message: result.message,
     };
   }
-  async block() {
+  async unblock(unblockValue: boolean = true, objectUpdateProperties: IUser = {email: '-'}) {
     const id = this.getVariables().id;
     if (!this.checkData(String(id) || '')) {
         return {
@@ -183,10 +184,26 @@ class UsersService extends ResolversOperationsService {
             genre: null
         };
     }
-    const result = await this.update(this.collection, { id }, { active: false }, 'usuario');
+    const action = (unblockValue) ? 'Desbloqueado' : 'Bloqueado';
+    let update;
+    if (objectUpdateProperties === {email: '-'}) {
+      update = {active: unblockValue};
+    } else {
+      // Comprobar la contraseña que es diferente a 1234
+      if (objectUpdateProperties.password === '1234') {
+        return {
+          status: false,
+          message: 'Cambia la contraseña para poder activar el usuario'
+        };
+      }
+      // Encriptar
+      objectUpdateProperties.password = bcrypt.hashSync(objectUpdateProperties.password, 10);
+      update = Object.assign({}, {active: unblockValue}, objectUpdateProperties);
+    }
+    const result = await this.update(this.collection, { id }, update, 'usuario');
     return {
         status: result.status,
-        message: (result.status) ? 'Bloqueado correctamente': 'No se ha bloqueado comprobarlo por favor'
+        message: (result.status) ? `${action} correctamente`: `No se ha ${action.toLowerCase()} comprobarlo por favor`
     };
   }
   private checkData(value: string) {

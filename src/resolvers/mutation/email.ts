@@ -1,7 +1,8 @@
-import { EXPIRETIME } from './../../config/constants';
+import { EXPIRETIME, MESSAGES } from './../../config/constants';
 import { IResolvers } from 'graphql-tools';
 import { transport } from '../../config/mailer';
 import JWT from '../../lib/jwt';
+import UsersService from '../../services/users.service';
 
 const resolversMailMutation: IResolvers = {
   Mutation: {
@@ -44,6 +45,24 @@ const resolversMailMutation: IResolvers = {
               });
           });
       });
+    },
+    activeUserAction(_, {id, birthday, password}, {token, db}) {
+      console.log(id, birthday, password);
+      const checkToken = new JWT().verify(token);
+      if (checkToken === MESSAGES.TOKEN_VERICATION_FAILED) {
+        return {
+          status: false,
+          message: 'El periodo para actualizar el password ha sido finalizado. Prueba de nuevo generando una nueva respuesta'
+        };
+      }
+      const user = Object.values(checkToken)[0];
+      // Clase 7
+      return new UsersService(_, {id, birthday, password }, {token, db}).unblock(true, {birthday, password});
+      // clase 6
+      return {
+        status: true,
+        message: 'Preparado para poder activar usuario'
+      };
     }
   },
 };
