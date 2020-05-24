@@ -1,4 +1,5 @@
-import { EXPIRETIME, MESSAGES } from './../../config/constants';
+import { findOneElement } from './../../lib/db-operations';
+import { EXPIRETIME, MESSAGES, COLLECTIONS } from './../../config/constants';
 import { IResolvers } from 'graphql-tools';
 import { transport } from '../../config/mailer';
 import JWT from '../../lib/jwt';
@@ -69,6 +70,39 @@ const resolversMailMutation: IResolvers = {
         message: 'Preparado para activar el usuario'
       };*/
       return new UsersService(_, { id, user: { birthday, password } }, {token, db}).unblock(true);
+    },
+    async resetPassword(_, {email}, {db}) {
+      // Coger información del usuario
+      const user = await findOneElement(db, COLLECTIONS.USERS, { email});
+      // Si usuario es indefinido mandamos un mensaje que no existe el usuario
+      if (user === undefined || user === null) {
+        return {
+          status: false,
+          message: `Usuario con el email ${email} no existe`
+        };
+      }
+      const newUser = {
+        id: user.id,
+        email
+      };
+      const token = new JWT().sign({user: newUser}, EXPIRETIME.M15);
+      const html = `Para cambiar de contraseña haz click sobre esto: <a href="${process.env.CLIENT_URL}/#/reset/${token}">Clic aquí</a>`;
+      return new Promise((resolve, reject) => {
+        transport.sendMail({
+            from: '"🕹️ Gamezonia Online Shop 🕹️" <gamezonia.online.shop@gmail.com>', // sender address
+            to: email, // list of receivers
+            subject: 'Petición para cambiar de contraseña', // Subject line
+            html
+          }, (error, _) => {
+              (error) ? reject({
+                  status: false,
+                  message: error
+              }) : resolve({
+                  status: true,
+                  message: 'Email correctamente enviado a ' + email
+              });
+          });
+      });
     }
   },
 };
