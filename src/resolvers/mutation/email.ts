@@ -1,4 +1,4 @@
-import { EXPIRETIME } from './../../config/constants';
+import { EXPIRETIME, MESSAGES } from './../../config/constants';
 import { IResolvers } from 'graphql-tools';
 import { transport } from '../../config/mailer';
 import JWT from '../../lib/jwt';
@@ -44,6 +44,23 @@ const resolversMailMutation: IResolvers = {
               });
           });
       });
+    },
+    async activeUserAction(_, { id, birthday, password }, {token, db}) {
+      // verificar el token
+      const checkToken = new JWT().verify(token);
+      if (checkToken === MESSAGES.TOKEN_VERICATION_FAILED) {
+        return {
+          status: false,
+          message: 'El periodo para activar el usuario ha finalizado. Contacta con el administrador para más información.',
+        };
+      }
+      // Si el token es valido , asignamos la información al usuario
+      const user = Object.values(checkToken)[0];
+      console.log(user, { id, birthday, password });
+      return {
+        status: true,
+        message: 'Preparado para activar el usuario'
+      };
     }
   },
 };
