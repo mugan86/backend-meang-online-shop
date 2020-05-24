@@ -2,6 +2,7 @@ import { EXPIRETIME, MESSAGES } from './../../config/constants';
 import { IResolvers } from 'graphql-tools';
 import { transport } from '../../config/mailer';
 import JWT from '../../lib/jwt';
+import UsersService from '../../services/users.service';
 
 const resolversMailMutation: IResolvers = {
   Mutation: {
@@ -57,10 +58,11 @@ const resolversMailMutation: IResolvers = {
       // Si el token es valido , asignamos la información al usuario
       const user = Object.values(checkToken)[0];
       console.log(user, { id, birthday, password });
-      return {
+      /*return {
         status: true,
         message: 'Preparado para activar el usuario'
-      };
+      };*/
+      return new UsersService(_, { id, birthday, password }, {token, db}).unblock(true);
     }
   },
 };
