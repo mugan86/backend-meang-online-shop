@@ -58,11 +58,17 @@ const resolversMailMutation: IResolvers = {
       // Si el token es valido , asignamos la información al usuario
       const user = Object.values(checkToken)[0];
       console.log(user, { id, birthday, password });
+      if (user.id !== id) {
+        return {
+          status: false,
+          message: 'El usuario del token no corresponde al añadido en el argumento'
+        };
+      }
       /*return {
         status: true,
         message: 'Preparado para activar el usuario'
       };*/
-      return new UsersService(_, { id, birthday, password }, {token, db}).unblock(true);
+      return new UsersService(_, { id, user: { birthday, password } }, {token, db}).unblock(true);
     }
   },
 };
