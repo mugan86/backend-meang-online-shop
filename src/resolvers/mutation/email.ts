@@ -5,6 +5,7 @@ import JWT from '../../lib/jwt';
 import UsersService from '../../services/users.service';
 import bcrypt from 'bcrypt';
 import MailService from '../../services/mail.service';
+import PasswordService from '../../services/password.service';
 const resolversMailMutation: IResolvers = {
   Mutation: {
     async sendEmail(_, { mail }) {
@@ -21,27 +22,7 @@ const resolversMailMutation: IResolvers = {
       return new UsersService(_, { id, user: { birthday, password } }, {token, db}).unblock(true);
     },
     async resetPassword(_, {email}, {db}) {
-      // Coger información del usuario
-      const user = await findOneElement(db, COLLECTIONS.USERS, { email});
-      // Si usuario es indefinido mandamos un mensaje que no existe el usuario
-      if (user === undefined || user === null) {
-        return {
-          status: false,
-          message: `Usuario con el email ${email} no existe`
-        };
-      }
-      const newUser = {
-        id: user.id,
-        email
-      };
-      const token = new JWT().sign({user: newUser}, EXPIRETIME.M15);
-      const html = `Para cambiar de contraseña haz click sobre esto: <a href="${process.env.CLIENT_URL}/#/reset/${token}">Clic aquí</a>`;
-      const mail = {
-        to: email,
-        subject: 'Petición para cambiar de contraseña',
-        html
-      };
-      return new MailService().send(mail);
+      return new PasswordService(_, {user: {email}}, {db} ).sendMail();
     },
     async changePassword(_, { id, password}, { db, token }) {
       // verificar el token
