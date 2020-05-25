@@ -4,7 +4,7 @@ import MailService from './mail.service';
 import JWT from '../lib/jwt';
 import { findOneElement } from '../lib/db-operations';
 import { COLLECTIONS, EXPIRETIME } from '../config/constants';
-
+import bcrypt from 'bcrypt';
 class PasswordService extends ResolversOperationsService {
   constructor(root: object, variables: object, context: IContextData) {
     super(root, variables, context);
@@ -40,6 +40,40 @@ class PasswordService extends ResolversOperationsService {
       html,
     };
     return new MailService().send(mail);
+  }
+
+  async change() {
+    const id = this.getVariables().user?.id;
+    let password = this.getVariables().user?.password;
+    // comprobar que el id es correcto: no indefinido y no en blanco
+    if (id === undefined || id === '') {
+      return {
+        status: false,
+        message: 'El ID necesita una información correcta'
+      };
+    }
+    // comprobar que el password es correcto: no indefinido y no en blanco
+    if (password === undefined || password === '' || password === '1234') {
+      return {
+        status: false,
+        message: 'El password necesita una información correcta'
+      };
+    }
+    // Encriptar el password
+    password = bcrypt.hashSync(password, 10);
+    // Actualizar en el id seleccionado de la coleccion usuarios
+    const result = await this.update(
+      COLLECTIONS.USERS,
+      { id },
+      { password },
+      'users'
+    ) ;
+
+    return {
+      status: result.status,
+      message: (result.status) ? 'Contraseña cambiada correctamente' :
+                                  result.message
+    };
   }
 }
 
