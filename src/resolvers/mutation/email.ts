@@ -1,10 +1,7 @@
-import { findOneElement, updateOneElement } from './../../lib/db-operations';
-import { EXPIRETIME, MESSAGES, COLLECTIONS } from './../../config/constants';
+import { MESSAGES } from './../../config/constants';
 import { IResolvers } from 'graphql-tools';
-import { transport } from '../../config/mailer';
 import JWT from '../../lib/jwt';
 import UsersService from '../../services/users.service';
-import bcrypt from 'bcrypt';
 import MailService from '../../services/mail.service';
 import PasswordService from '../../services/password.service';
 const resolversMailMutation: IResolvers = {
