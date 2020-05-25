@@ -1,7 +1,6 @@
 import { findOneElement, updateOneElement } from './../../lib/db-operations';
 import { EXPIRETIME, MESSAGES, COLLECTIONS } from './../../config/constants';
 import { IResolvers } from 'graphql-tools';
-import { transport } from '../../config/mailer';
 import JWT from '../../lib/jwt';
 import UsersService from '../../services/users.service';
 import bcrypt from 'bcrypt';
@@ -12,14 +11,7 @@ const resolversMailMutation: IResolvers = {
       return new MailService().send(mail);
     },
     async activeUserEmail(_, { id, email }) {
-      const token = new JWT().sign({user: {id, email}}, EXPIRETIME.H1);
-      const html = `Para activar la cuenta haz click sobre esto: <a href="${process.env.CLIENT_URL}/#/active/${token}">Clic aquí</a>`;
-      const mail = {
-        subject: 'Activar usuario',
-        to: email,
-        html
-      };
-      return new MailService().send(mail);
+      return new UsersService(_, {user: {id, email}}, {}).active();
     },
     async activeUserAction(_, { id, birthday, password }, {token, db}) {
       const verify = verifyToken(token, id);
