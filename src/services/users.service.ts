@@ -4,6 +4,7 @@ import { IContextData } from '../interfaces/context-data.interface';
 import ResolversOperationsService from './resolvers-operations.service';
 import bcrypt from 'bcrypt';
 import JWT from '../lib/jwt';
+import MailService from './mail.service';
 class UsersService extends ResolversOperationsService {
   private collection = COLLECTIONS.USERS;
   constructor(root: object, variables: object, context: IContextData) {
@@ -205,6 +206,25 @@ class UsersService extends ResolversOperationsService {
         status: result.status,
         message: (result.status) ? `${action} correctamente`: `No se ha ${action.toLowerCase()} comprobarlo por favor`
     };
+  }
+
+  async activeEmail() {
+    const id = this.getVariables().user?.id;
+    const email = this.getVariables().user?.email || '';
+    if (email === undefined || email === '') {
+      return {
+        status: false,
+        message: 'Debes de especificar un correo electrónico para poder enviar el email de activación'
+      };
+    }
+    const token = new JWT().sign({user: {id, email }}, EXPIRETIME.H1);
+      const html = `Para activar la cuenta haz click sobre esto: <a href="${process.env.CLIENT_URL}/#/active/${token}">Clic aquí</a>`;
+      const mail = {
+        subject: 'Activar usuario',
+        to: email,
+        html
+      };
+      return new MailService().send(mail);
   }
   private checkData(value: string) {
     return (value === '' || value === undefined) ? false: true;
