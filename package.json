@@ -5,7 +5,7 @@
   "main": "build/server.js",
   "scripts": {
     "start": "node build/server.js",
-    "build": "tsc -p .",
+    "build": "tsc -p . && ncp src/schema build/schema",
     "dev": "nodemon \"src/server.ts\" --exec \"ts-node\" \"src/server.ts\" -e ts,graphql,json"
   },
   "repository": {
