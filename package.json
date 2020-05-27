@@ -28,8 +28,8 @@
   },
   "homepage": "https://github.com/mugan86/backend-meang-online-shop#readme",
   "engines": {
-    "node": ">=12.0.0",
-    "npm": ">=6.0.0"
+    "node": "12.x",
+    "npm": "6.x"
   },
   "dependencies": {
     "apollo-server-express": "^2.11.0",
