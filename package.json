@@ -28,8 +28,8 @@
   },
   "homepage": "https://github.com/mugan86/backend-meang-online-shop#readme",
   "engines": {
-    "node": "12.x",
-    "npm": "6.x"
+    "node": ">=12.0.0",
+    "npm": ">=6.0.0"
   },
   "dependencies": {
     "apollo-server-express": "^2.11.0",
@@ -39,7 +39,7 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "graphql": "^14.6.0",
+    "graphql": "^15.0.0",
     "graphql-import-node": "0.0.4",
     "graphql-merge-resolvers": "^1.1.16",
     "graphql-playground-middleware-express": "^1.7.12",
