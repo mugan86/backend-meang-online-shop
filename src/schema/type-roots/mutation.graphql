@@ -1,23 +1,138 @@
 type Mutation {
-    "Apartado de operaciones donde trabajamos con los usuarios"
-    register(user: UserInput!): ResultUser
-    updateUser(user: UserInput!): ResultUser
-    deleteUser(id: ID!): ResultUser
-    blockUser(id: ID!): ResultUser
-    "Apartado de operaciones donde trabajamos con los géneros"
-    addGenre(genre: String!): ResultGenre
-    updateGenre(id: ID!, genre: String!): ResultGenre
-    deleteGenre(id: ID!): ResultGenre
-    blockGenre(id: ID!): ResultGenre
-    "Apartado de operaciones donde trabajamos con los tags"
-    addTag(tag: String!): ResultTag
-    updateTag(id: ID!, tag: String!): ResultTag
-    deleteTag(id: ID!): ResultTag
-    blockTag(id: ID!): ResultTag
-    "Envio de emails automáticos"
-    sendEmail(mail: MailInput!): ResultMail
-    activeUserEmail(id: ID!, email: String!): ResultMail
-    activeUserAction(id: ID!, birthday: String!, password: String!): ResultMail
-    resetPassword(email: String!): ResultMail
-    changePassword(id: ID!, password: String!): ResultUser
+  """
+  Registro del usuario, para poder administrar
+  la información de la tienda como **ADMIN** o como cliente (**CLIENT**)
+  que desea comprar videojuegos
+  """
+  register(
+    """
+    Información del usuario que vamos a usar para realizar el registro
+    Añadiremos la información que deberemos de comprobar dentro del **UserInput** para
+    saber que debemos de añadir en el parámetro
+    """
+    user: UserInput!
+  ): ResultUser
+  """
+  Para actualizar la información del usuario especificado y así tener ña información
+  actualizada a nuestro gusto
+  """
+  updateUser(
+    """
+    Información del usuario que vamos a usar para realizar el registro
+    Añadiremos la información que deberemos de comprobar dentro del **UserInput** para
+    saber que debemos de añadir en el parámetro
+    """
+    user: UserInput!
+  ): ResultUser
+  """
+  Para borrar el usuario. Esta acción no la usaremos, en su lugar para
+  hacer desaparecer un item correcto, usaremos la función de bloquear
+  """
+  deleteUser("ID único del usuario que queremos eliminar" id: ID!): ResultUser
+  """
+  Para bloquear (desactivar) el usuario y clasificarlo como "inactivo", con el que no podrá
+  realizar compras, no podrá acceder a su información principal y demás
+  """
+  blockUser("ID único del usuario que queremos eliminar" id: ID!): ResultUser
+  "Acción donde vamos a añadir el género introducido"
+  addGenre(
+    """
+    Nombre del género que vamos a añadir. Con este valor crearemos
+    el slug siguiendo este formato.
+    Por ejemplo: "genre = Action Shooter" => slug = action-shooter
+    """
+    genre: String!
+  ): ResultGenre
+  """
+  Para actualizar la información del género especificado con el ID
+  y así tener ña información actualizada a nuestro gusto con el
+  nuevo género
+  """
+  updateGenre(
+    "ID único del género que queremos actualizar"
+    id: ID!
+    "Nombre del género con el que vamos a actualizar"
+    genre: String!
+  ): ResultGenre
+  """
+  Para borrar el género. Esta acción no la usaremos, en su lugar para
+  hacer desaparecer un item correcto, usaremos la función de bloquear
+  """
+  deleteGenre("ID único del género que queremos eliminar" id: ID!): ResultGenre
+  """
+  Para bloquear (desactivar) el género y clasificarlo como "inactivo" y
+  no poder utilizarlo
+  """
+  blockGenre(id: ID!): ResultGenre
+  """
+  Acción donde vamos a añadir el tag introducido, seguirá la estructura
+  de los géneros
+  """
+  addTag(
+    """
+    Nombre del tag que vamos a añadir. Con este valor crearemos
+    el slug siguiendo este formato.
+    Por ejemplo: "tag = Action Shooter" => slug = action-shooter
+    """
+    tag: String!
+  ): ResultTag
+  """
+  Para actualizar la información del tag especificado con el ID
+  y así tener ña información actualizada a nuestro gusto con el
+  nuevo tag
+  """
+  updateTag(
+    "ID único del tag que queremos actualizar"
+    id: ID!
+    "Nombre del tag con el que vamos a actualizar"
+    tag: String!
+  ): ResultTag
+  """
+  Para borrar el tag. Esta acción no la usaremos, en su lugar para
+  hacer desaparecer un item correcto, usaremos la función de bloquear
+  """
+  deleteTag("ID único del tag que queremos eliminar" id: ID!): ResultTag
+  """
+  Para bloquear (desactivar) el tag y clasificarlo como "inactivo" y
+  no poder utilizarlo
+  """
+  blockTag("ID único del tag que queremos bloquear" id: ID!): ResultTag
+  """
+  Acción que usaremos para enviar correos electrónicos con la
+  siguiente información dentro del **MailInput**:
+  * from:       Correo electrónico del emisor (ya configurado)
+  * to:         Correo electrónico del receptor
+  * subject:    Asunto del correo electrónico
+  * html:       Contenido del correo electrónico en formato HTML
+  """
+  sendEmail(mail: MailInput!): ResultMail
+  """
+  Acción que permitirá enviar al usuario seleccionado la información necesaria
+  para poder activar el usuario, añadiendo su fecha de nacimiento y su password
+  ya que esta acción se va a utilizar cuando creamos el usuario desde el panel
+  de administración.
+  """
+  activeUserEmail(id: ID!, email: String!): ResultMail
+  """
+  Acción en el que el usuario que tiene que activar el usuario añadiendo
+  su fecha de nacimiento y un nuevo password, para poder acceder a las
+  compras y otras opciones
+  """
+  activeUserAction(id: ID!, birthday: String!, password: String!): ResultMail
+  """
+  Acción para hacer la petición del cambio de password de un usuario existente
+  en la base de datos con el objetivo de resetear y añadir la nueva información.
+  El cambio de la contraseña se dará por el olvido de ella o simplemente por querer hacer un cambio a una más segura
+  """
+  resetPassword(
+    "Email del usuario que queremos cambiarle el password"
+    email: String!
+  ): ResultMail
+  """
+  Acción para cambiar la información del password del usuario que pasamos
+  con su **id** de usuario, ya que hemos solicitado anteriormente desde
+  **resetPassword(<email>)** las instrucciones para el cambio de la contraseña
+  por el olvido de ella o simplemente por querer hacer un cambio a una más segura
+  """
+  changePassword(id: ID!, password: String!): ResultUser
 }
