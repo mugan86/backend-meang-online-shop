@@ -1,3 +1,4 @@
+import { ACTIVE_VALUES_FILTER } from './../config/constants';
 import { findOneElement, asignDocumentId } from './../lib/db-operations';
 import { COLLECTIONS, EXPIRETIME, MESSAGES } from '../config/constants';
 import { IContextData } from '../interfaces/context-data.interface';
@@ -12,7 +13,8 @@ class UsersService extends ResolversOperationsService {
   }
 
   // Lista de usuarios
-  async items() {
+  async items(active: string = ACTIVE_VALUES_FILTER.ACTIVE) {
+    console.log('service', active);
     const page = this.getVariables().pagination?.page;
     const itemsPage = this.getVariables().pagination?.itemsPage;
     const result = await this.list(this.collection, 'usuarios', page, itemsPage);

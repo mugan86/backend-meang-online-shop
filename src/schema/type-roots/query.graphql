@@ -5,7 +5,9 @@ type Query {
         "Página seleccionada para acceder a ella"
         page: Int = 1,
         "Usuarios por página que se obtendrán por página"
-        itemsPage: Int = 20): ResultUsers
+        itemsPage: Int = 20,
+        "Especificar el estado del usuario que queremos mostrar"
+        active: ActiveFilterEnum = ACTIVE): ResultUsers
     "Para iniciar sesión de usuario"
     login(
         "Correo electrónico del usuario con el que nos vamos a loguear"

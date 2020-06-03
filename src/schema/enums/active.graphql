@@ -1,0 +1,5 @@
+enum ActiveFilterEnum {
+    ALL
+    ACTIVE
+    INACTIVE
+}
