@@ -18,8 +18,6 @@ class TagsService extends ResolversOperationsService {
         }
         const page = this.getVariables().pagination?.page;
         const itemsPage = this.getVariables().pagination?.itemsPage;
-        console.log(this.getVariables().pagination);
-        console.log(page, itemsPage);
         const result = await this.list(this.collection, 'tags', page, itemsPage, filter);
         return { info: result.info, status: result.status, message: result.message, tags: result.items };
     }

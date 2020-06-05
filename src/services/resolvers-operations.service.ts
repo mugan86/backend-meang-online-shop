@@ -36,7 +36,6 @@ class ResolversOperationsService {
     filter: object = { active: { $ne: false}}
   ) {
     try {
-      console.log(page, itemsPage);
       const paginationData = await pagination(
         this.getDb(),
         collection,
