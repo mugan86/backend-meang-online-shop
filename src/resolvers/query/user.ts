@@ -3,7 +3,6 @@ import UsersService from '../../services/users.service';
 const resolversUserQuery: IResolvers = {
   Query: {
     async users(_, { page, itemsPage, active}, context) {
-      console.log(active);
       return new UsersService(_, {
         pagination: { page, itemsPage}
     }, context).items(active);

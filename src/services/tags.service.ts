@@ -9,7 +9,6 @@ class TagsService extends ResolversOperationsService {
         super(root, variables, context);
     }
     async items(active: string = ACTIVE_VALUES_FILTER.ACTIVE) {
-        console.log(active);
         let filter: object = { active: {$ne: false}};
         if (active === ACTIVE_VALUES_FILTER.ALL) {
           filter = {};

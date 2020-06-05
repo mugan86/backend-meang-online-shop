@@ -9,7 +9,6 @@ class GenresService extends ResolversOperationsService {
         super(root, variables, context);
     }
     async items(active: string = ACTIVE_VALUES_FILTER.ACTIVE) {
-        console.log(active);
         let filter: object = { active: {$ne: false}};
         if (active === ACTIVE_VALUES_FILTER.ALL) {
           filter = {};
@@ -18,8 +17,6 @@ class GenresService extends ResolversOperationsService {
         }
         const page = this.getVariables().pagination?.page;
         const itemsPage = this.getVariables().pagination?.itemsPage;
-        console.log(this.getVariables().pagination);
-        console.log(page, itemsPage);
         const result = await this.list(this.collection, 'géneros', page, itemsPage, filter);
         return { info: result.info, status: result.status, message: result.message, genres: result.items };
     }
