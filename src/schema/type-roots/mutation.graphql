@@ -33,7 +33,13 @@ type Mutation {
   Para bloquear (desactivar) el usuario y clasificarlo como "inactivo", con el que no podrá
   realizar compras, no podrá acceder a su información principal y demás
   """
-  blockUser("ID único del usuario que queremos eliminar" id: ID!): ResultUser
+  blockUser(
+    "ID único del usuario que queremos eliminar"
+    id: ID!,
+    "Argumento para especificar si queremos bloquear o desbloquear"
+    unblock: Boolean = false,
+    "Especificar la procedencia de la petición para la modificación"
+    admin: Boolean = false): ResultUser
   "Acción donde vamos a añadir el género introducido"
   addGenre(
     """

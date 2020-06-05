@@ -183,7 +183,7 @@ class UsersService extends ResolversOperationsService {
       message: result.message,
     };
   }
-  async unblock(unblock: boolean) {
+  async unblock(unblock: boolean, admin: boolean) {
     const id = this.getVariables().id;
     const user = this.getVariables().user;
     if (!this.checkData(String(id) || '')) {
@@ -200,7 +200,8 @@ class UsersService extends ResolversOperationsService {
       };
     }
     let update = {active: unblock};
-    if (unblock) {
+    if (unblock && !admin) {
+      console.log('Soy cliente y estoy cambiando la contraseña');
       update = Object.assign({}, {active: true}, 
         {
           birthday: user?.birthday, 
