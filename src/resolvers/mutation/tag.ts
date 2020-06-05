@@ -12,8 +12,8 @@ const resolversTagMutation: IResolvers = {
     deleteTag(_, variables, context) {
       return new TagsService(_, variables, context).delete();
     },
-    blockTag(_, variables, context) {
-      return new TagsService(_, variables, context).block();
+    blockTag(_, {id, unblock}, context) {
+      return new TagsService(_, {id}, context).unblock(unblock);
     },
   },
 };

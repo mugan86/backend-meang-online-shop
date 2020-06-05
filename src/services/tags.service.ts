@@ -87,7 +87,7 @@ class TagsService extends ResolversOperationsService {
         return { status: result.status, message: result.message };
     }
 
-    async block() {
+    async unblock(unblock: boolean = false) {
         const id = this.getVariables().id;
         if (!this.checkData(String(id) || '')) {
             return {
@@ -96,10 +96,11 @@ class TagsService extends ResolversOperationsService {
                 tag: null
             };
         }
-        const result = await this.update(this.collection, { id }, { active: false }, 'tag');
+        const result = await this.update(this.collection, { id }, { active: unblock }, 'tag');
+        const action = (unblock) ? 'Desbloqueado' : 'Bloqueado';
         return {
             status: result.status,
-            message: (result.status) ? 'Bloqueado correctamente': 'No se ha bloqueado comprobarlo por favor'
+            message: (result.status) ? `${action} correctamente`: `No se ha ${action.toLowerCase()} comprobarlo por favor`
         };
     }
     private checkData(value: string) {

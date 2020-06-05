@@ -107,7 +107,12 @@ type Mutation {
   Para bloquear (desactivar) el tag y clasificarlo como "inactivo" y
   no poder utilizarlo
   """
-  blockTag("ID único del tag que queremos bloquear" id: ID!): ResultTag
+  blockTag(
+    "ID único del tag que queremos bloquear"
+    id: ID!,
+    "Argumento para especificar si queremos bloquear o desbloquear"
+    unblock: Boolean = false
+    ): ResultTag
   """
   Acción que usaremos para enviar correos electrónicos con la
   siguiente información dentro del **MailInput**:
