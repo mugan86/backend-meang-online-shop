@@ -208,7 +208,6 @@ class UsersService extends ResolversOperationsService {
           password: bcrypt.hashSync(user?.password, 10)
         });
     }
-    console.log(update);
     const result = await this.update(this.collection, { id }, update, 'usuario');
     const action = (unblock) ? 'Desbloqueado' : 'Bloqueado';
     return {

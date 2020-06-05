@@ -12,8 +12,8 @@ const resolversGenreMutation: IResolvers = {
     deleteGenre(_, variables, context) {
       return new GenresService(_, variables, context).delete();
     },
-    blockGenre(_, variables, context) {
-      return new GenresService(_, variables, context).block();
+    blockGenre(_, { id, unblock }, context) {
+      return new GenresService(_, {id}, context).unblock(unblock);
     },
   },
 };

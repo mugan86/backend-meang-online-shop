@@ -69,7 +69,12 @@ type Mutation {
   Para bloquear (desactivar) el género y clasificarlo como "inactivo" y
   no poder utilizarlo
   """
-  blockGenre(id: ID!): ResultGenre
+  blockGenre(
+    ""
+    id: ID!,
+    "Argumento para especificar si queremos bloquear o desbloquear"
+    unblock: Boolean = false
+    ): ResultGenre
   """
   Acción donde vamos a añadir el tag introducido, seguirá la estructura
   de los géneros
