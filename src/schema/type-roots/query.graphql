@@ -22,7 +22,7 @@ type Query {
         page: Int = 1,
         "Géneros de los juegos que se obtendrán por página"
         itemsPage: Int = 20,
-        "Especificar el estado del usuario que queremos mostrar"
+        "Especificar el estado del género que queremos mostrar"
         active: ActiveFilterEnum = ACTIVE): ResultGenre
     "Item del género seleccionado"
     genre(
@@ -33,7 +33,9 @@ type Query {
         "Página seleccionada para acceder a ella"
         page: Int = 1,
         "Tags (etiquetas) que se obtendrán por página"
-        itemsPage: Int = 20): ResultTag
+        itemsPage: Int = 20,
+        "Especificar el estado del tag que queremos mostrar"
+        active: ActiveFilterEnum = ACTIVE): ResultTag
     "Item del género seleccionado"
     tag(
         "Identificador de la etiqueta seleccionada"

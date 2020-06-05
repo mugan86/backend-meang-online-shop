@@ -1,4 +1,4 @@
-import { COLLECTIONS } from './../config/constants';
+import { COLLECTIONS, ACTIVE_VALUES_FILTER } from './../config/constants';
 import { findOneElement, asignDocumentId } from './../lib/db-operations';
 import ResolversOperationsService from './resolvers-operations.service';
 import { IContextData } from '../interfaces/context-data.interface';
@@ -8,12 +8,19 @@ class TagsService extends ResolversOperationsService {
     constructor(root: object, variables: object, context: IContextData) {
         super(root, variables, context);
     }
-    async items() {
+    async items(active: string = ACTIVE_VALUES_FILTER.ACTIVE) {
+        console.log(active);
+        let filter: object = { active: {$ne: false}};
+        if (active === ACTIVE_VALUES_FILTER.ALL) {
+          filter = {};
+        } else if (active === ACTIVE_VALUES_FILTER.INACTIVE) {
+          filter = { active: false };
+        }
         const page = this.getVariables().pagination?.page;
         const itemsPage = this.getVariables().pagination?.itemsPage;
         console.log(this.getVariables().pagination);
         console.log(page, itemsPage);
-        const result = await this.list(this.collection, 'tags', page, itemsPage);
+        const result = await this.list(this.collection, 'tags', page, itemsPage, filter);
         return { info: result.info, status: result.status, message: result.message, tags: result.items };
     }
     async details() {
