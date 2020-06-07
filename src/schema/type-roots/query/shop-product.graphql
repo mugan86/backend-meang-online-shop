@@ -1,0 +1,10 @@
+type Query {
+    "Lista de productos de la tienda"
+    shopProducts (
+        "Página seleccionada para acceder a ella"
+        page: Int = 1,
+        "Products de la tienda (juegos) que se obtendrán por página"
+        itemsPage: Int = 20,
+        "Especificar el estado del product que queremos mostrar"
+        active: ActiveFilterEnum = ACTIVE): ResultShopProduct
+}

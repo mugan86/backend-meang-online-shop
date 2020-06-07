@@ -1,0 +1,8 @@
+type ShopProduct {
+    id: ID!
+    productId: ID!
+    platformId: ID!
+    active: Boolean!
+    price: Float!
+    stock: Int!
+}
