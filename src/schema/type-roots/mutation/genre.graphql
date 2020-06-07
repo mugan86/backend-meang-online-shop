@@ -1,0 +1,37 @@
+type Mutation {
+  "Acción donde vamos a añadir el género introducido"
+  addGenre(
+    """
+    Nombre del género que vamos a añadir. Con este valor crearemos
+    el slug siguiendo este formato.
+    Por ejemplo: "genre = Action Shooter" => slug = action-shooter
+    """
+    genre: String!
+  ): ResultGenre
+  """
+  Para actualizar la información del género especificado con el ID
+  y así tener ña información actualizada a nuestro gusto con el
+  nuevo género
+  """
+  updateGenre(
+    "ID único del género que queremos actualizar"
+    id: ID!
+    "Nombre del género con el que vamos a actualizar"
+    genre: String!
+  ): ResultGenre
+  """
+  Para borrar el género. Esta acción no la usaremos, en su lugar para
+  hacer desaparecer un item correcto, usaremos la función de bloquear
+  """
+  deleteGenre("ID único del género que queremos eliminar" id: ID!): ResultGenre
+  """
+  Para bloquear (desactivar) el género y clasificarlo como "inactivo" y
+  no poder utilizarlo
+  """
+  blockGenre(
+    ""
+    id: ID!
+    "Argumento para especificar si queremos bloquear o desbloquear"
+    unblock: Boolean = false
+  ): ResultGenre
+}

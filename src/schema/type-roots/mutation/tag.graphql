@@ -1,0 +1,41 @@
+type Mutation {
+    """
+  Acción donde vamos a añadir el tag introducido, seguirá la estructura
+  de los géneros
+  """
+  addTag(
+    """
+    Nombre del tag que vamos a añadir. Con este valor crearemos
+    el slug siguiendo este formato.
+    Por ejemplo: "tag = Action Shooter" => slug = action-shooter
+    """
+    tag: String!
+  ): ResultTag
+  """
+  Para actualizar la información del tag especificado con el ID
+  y así tener ña información actualizada a nuestro gusto con el
+  nuevo tag
+  """
+  updateTag(
+    "ID único del tag que queremos actualizar"
+    id: ID!
+    "Nombre del tag con el que vamos a actualizar"
+    tag: String!
+  ): ResultTag
+  """
+  Para borrar el tag. Esta acción no la usaremos, en su lugar para
+  hacer desaparecer un item correcto, usaremos la función de bloquear
+  """
+  deleteTag("ID único del tag que queremos eliminar" id: ID!): ResultTag
+  """
+  Para bloquear (desactivar) el tag y clasificarlo como "inactivo" y
+  no poder utilizarlo
+  """
+  blockTag(
+    "ID único del tag que queremos bloquear"
+    id: ID!,
+    "Argumento para especificar si queremos bloquear o desbloquear"
+    unblock: Boolean = false
+    ): ResultTag
+    
+}

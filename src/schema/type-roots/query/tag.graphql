@@ -1,0 +1,13 @@
+type Query {
+  "Lista de etiquetas (tags)"
+  tags(
+    "Página seleccionada para acceder a ella"
+    page: Int = 1
+    "Tags (etiquetas) que se obtendrán por página"
+    itemsPage: Int = 20
+    "Especificar el estado del tag que queremos mostrar"
+    active: ActiveFilterEnum = ACTIVE
+  ): ResultTag
+  "Item del género seleccionado"
+  tag("Identificador de la etiqueta seleccionada" id: ID!): ResultTag
+}

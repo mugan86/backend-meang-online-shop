@@ -1,0 +1,40 @@
+type Mutation {
+  """
+  Acción que usaremos para enviar correos electrónicos con la
+  siguiente información dentro del **MailInput**:
+  * from:       Correo electrónico del emisor (ya configurado)
+  * to:         Correo electrónico del receptor
+  * subject:    Asunto del correo electrónico
+  * html:       Contenido del correo electrónico en formato HTML
+  """
+  sendEmail(mail: MailInput!): ResultMail
+  """
+  Acción que permitirá enviar al usuario seleccionado la información necesaria
+  para poder activar el usuario, añadiendo su fecha de nacimiento y su password
+  ya que esta acción se va a utilizar cuando creamos el usuario desde el panel
+  de administración.
+  """
+  activeUserEmail(id: ID!, email: String!): ResultMail
+  """
+  Acción en el que el usuario que tiene que activar el usuario añadiendo
+  su fecha de nacimiento y un nuevo password, para poder acceder a las
+  compras y otras opciones
+  """
+  activeUserAction(id: ID!, birthday: String!, password: String!): ResultMail
+  """
+  Acción para hacer la petición del cambio de password de un usuario existente
+  en la base de datos con el objetivo de resetear y añadir la nueva información.
+  El cambio de la contraseña se dará por el olvido de ella o simplemente por querer hacer un cambio a una más segura
+  """
+  resetPassword(
+    "Email del usuario que queremos cambiarle el password"
+    email: String!
+  ): ResultMail
+  """
+  Acción para cambiar la información del password del usuario que pasamos
+  con su **id** de usuario, ya que hemos solicitado anteriormente desde
+  **resetPassword(<email>)** las instrucciones para el cambio de la contraseña
+  por el olvido de ella o simplemente por querer hacer un cambio a una más segura
+  """
+  changePassword(id: ID!, password: String!): ResultUser
+}
