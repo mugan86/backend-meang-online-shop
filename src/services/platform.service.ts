@@ -2,16 +2,16 @@ import { COLLECTIONS } from './../config/constants';
 import ResolversOperationsService from './resolvers-operations.service';
 
 
-class ProductService extends ResolversOperationsService {
-    collection = COLLECTIONS.PRODUCTS;
+class PlatformService extends ResolversOperationsService {
+    collection = COLLECTIONS.PLATFORMS;
     constructor(root: object, variables: object, context: object) {
         super(root, variables, context);
     }
 
     async details() {
         const result = await this.get(this.collection);
-        return { status: result.status, message: result.message, product: result.item };
+        return { status: result.status, message: result.message, platform: result.item };
     }
 }
 
-export default ProductService;
+export default PlatformService;

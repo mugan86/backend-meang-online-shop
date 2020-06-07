@@ -1,5 +1,6 @@
 import { IResolvers } from 'graphql-tools';
 import ProductService from '../../services/product.service';
+import PlatformService from '../../services/platform.service';
 
 const resolversShopProductType: IResolvers = {
   ShopProduct: {
@@ -11,8 +12,16 @@ const resolversShopProductType: IResolvers = {
         { id: parent.product_id },
         { db }
       ).details();
-      return result.shopProduct;
+      return result.product;
     },
+    platform: async (parent, __, { db }) => {
+        const result = await new PlatformService(
+          {},
+          { id: parent.platform_id },
+          { db }
+        ).details();
+        return result.platform;
+      },
   },
 };
 
