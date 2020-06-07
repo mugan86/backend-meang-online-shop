@@ -1,0 +1,7 @@
+type Product {
+    id: ID!
+    name: String!
+    slug: String!
+    released: String!
+    img: String!
+}

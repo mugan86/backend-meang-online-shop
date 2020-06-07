@@ -11,7 +11,8 @@ export enum COLLECTIONS {
   USERS = 'users',
   GENRES = 'genres',
   TAGS = 'tags',
-  SHOP_PRODUCT = 'products_platforms'
+  SHOP_PRODUCT = 'products_platforms',
+  PRODUCTS = 'products'
 }
 
 

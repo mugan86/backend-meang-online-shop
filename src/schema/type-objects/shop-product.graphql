@@ -1,7 +1,9 @@
 type ShopProduct {
     id: ID!
     productId: ID!
+    product: Product!
     platformId: ID!
+    platform: Platform!
     active: Boolean!
     price: Float!
     stock: Int!
