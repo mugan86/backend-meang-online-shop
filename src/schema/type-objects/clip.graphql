@@ -1,0 +1,11 @@
+type Clip {
+    clips: ClipQuality
+    video: String
+    preview: String
+}
+
+type ClipQuality {
+    low: String!
+    medium: String!
+    full: String!
+}
