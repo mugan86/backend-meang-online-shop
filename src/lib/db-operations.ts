@@ -95,3 +95,20 @@ export const countElements = async (
   return await database.collection(collection).countDocuments(filter);
 };
 
+export const randomItems = async(
+  database: Db,
+  collection: string,
+  filter: object = {},
+  items: number = 10
+) => {
+  return new Promise(async(resolve) => {
+    const pipeline = [
+      { $match: filter },
+      { $sample: { size: items}}
+    ];
+    resolve(await database.collection(collection).aggregate(
+      pipeline
+    ).toArray());
+  });
+};
+
