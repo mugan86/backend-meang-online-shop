@@ -15,5 +15,7 @@ type Query {
         "Especificar el estado del product que queremos mostrar"
         active: ActiveFilterEnum = ACTIVE,
         "Especificar el de la platforma seleccionada"
-        platform: ID!): ResultShopProduct
+        platform: ID!,
+        "Seleccionar los elementos de manera aleatoria"
+        random: Boolean = false): ResultShopProduct
 }

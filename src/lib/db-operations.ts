@@ -100,7 +100,7 @@ export const randomItems = async(
   collection: string,
   filter: object = {},
   items: number = 10
-) => {
+): Promise<Array<object>> => {
   return new Promise(async(resolve) => {
     const pipeline = [
       { $match: filter },

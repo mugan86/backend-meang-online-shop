@@ -1,3 +1,4 @@
+import { randomItems } from './../lib/db-operations';
 import { COLLECTIONS, ACTIVE_VALUES_FILTER } from './../config/constants';
 import ResolversOperationsService from './resolvers-operations.service';
 
@@ -9,7 +10,8 @@ class ShopProductsService extends ResolversOperationsService {
 
   async items(
     active: string = ACTIVE_VALUES_FILTER.ACTIVE,
-    platform: string = ''
+    platform: string = '',
+    random: boolean = false
   ) {
     let filter: object = { active: { $ne: false } };
     if (active === ACTIVE_VALUES_FILTER.ALL) {
@@ -22,19 +24,42 @@ class ShopProductsService extends ResolversOperationsService {
     }
     const page = this.getVariables().pagination?.page;
     const itemsPage = this.getVariables().pagination?.itemsPage;
-    const result = await this.list(
+    if(!random) {
+      const result = await this.list(
+        this.collection,
+        'productos de la tienda',
+        page,
+        itemsPage,
+        filter
+      );
+      return {
+        info: result.info,
+        status: result.status,
+        message: result.message,
+        shopProducts: result.items,
+      };
+    }
+    const result: Array<object> = await randomItems(
+      this.getDb(),
       this.collection,
-      'productos de la tienda',
-      page,
-      itemsPage,
-      filter
-    );
+      filter,
+      itemsPage
+    ); 
+    if (result.length === 0 || result.length !== itemsPage) {
+      return {
+        info: { page: 1, pages: 1, itemsPage, total: 0},
+        status: false,
+        message: 'La información que hemos pedido no se ha obtenido tal y como deseabamos',
+        shopProducts: [],
+      };
+    }
     return {
-      info: result.info,
-      status: result.status,
-      message: result.message,
-      shopProducts: result.items,
+      info: { page: 1, pages: 1, itemsPage, total: itemsPage},
+      status: true,
+      message: 'La información que hemos pedido se ha cargado correctamente',
+      shopProducts: result,
     };
+    
   }
 }
 

@@ -11,14 +11,14 @@ const resolversShopProductsQuery: IResolvers = {
         context
       ).items(active);
     },
-    shopProductsPlatforms(_, { page, itemsPage, active, platform }, context) {
+    shopProductsPlatforms(_, { page, itemsPage, active, platform, random }, context) {
       return new ShopProductsService(
         _,
         {
           pagination: { page, itemsPage },
         },
         context
-      ).items(active, platform);
+      ).items(active, platform, random);
     },
   },
 };
