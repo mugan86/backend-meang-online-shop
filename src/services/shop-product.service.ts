@@ -11,7 +11,8 @@ class ShopProductsService extends ResolversOperationsService {
   async items(
     active: string = ACTIVE_VALUES_FILTER.ACTIVE,
     platform: string = '',
-    random: boolean = false
+    random: boolean = false,
+    otherFilters: object = {}
   ) {
     let filter: object = { active: { $ne: false } };
     if (active === ACTIVE_VALUES_FILTER.ALL) {
@@ -21,6 +22,10 @@ class ShopProductsService extends ResolversOperationsService {
     }
     if (platform !== '' && platform !== undefined) {
       filter = {...filter, ...{platform_id: platform}};
+    }
+
+    if (otherFilters !== {} && otherFilters !== undefined) {
+      filter = {...filter, ...otherFilters};
     }
     const page = this.getVariables().pagination?.page;
     const itemsPage = this.getVariables().pagination?.itemsPage;

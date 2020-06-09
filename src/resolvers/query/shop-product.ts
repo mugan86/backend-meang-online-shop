@@ -20,7 +20,7 @@ const resolversShopProductsQuery: IResolvers = {
         context
       ).items(active, platform, random);
     },
-    shopProductsOffersLast(_, { page, itemsPage, active, randomw, topPrice, lastUnits}, context) {
+    shopProductsOffersLast(_, { page, itemsPage, active, random, topPrice, lastUnits}, context) {
         let otherFilters = {};
         if (lastUnits > 0 && topPrice > 10) {
           otherFilters = {
@@ -32,8 +32,15 @@ const resolversShopProductsQuery: IResolvers = {
         } else if (lastUnits <= 0 && topPrice > 10) {
           otherFilters =  {price: {$lte: topPrice}};
         } else if (lastUnits > 0 && topPrice <= 10) {
-          otherFilters =  {stock: {$lte: topPrice}};
+          otherFilters =  {stock: {$lte: lastUnits}};
         }
+        return new ShopProductsService(
+          _,
+          {
+            pagination: { page, itemsPage },
+          },
+          context
+        ).items(active, '', random, otherFilters);
     }
   },
 };
