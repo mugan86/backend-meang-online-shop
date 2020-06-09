@@ -18,4 +18,17 @@ type Query {
         platform: ID!,
         "Seleccionar los elementos de manera aleatoria"
         random: Boolean = false): ResultShopProduct
+    shopProductsOffersLast (
+        "Página seleccionada para acceder a ella"
+        page: Int = 1,
+        "Products de la tienda (juegos) que se obtendrán por página"
+        itemsPage: Int = 20,
+        "Especificar el estado del product que queremos mostrar"
+        active: ActiveFilterEnum = ACTIVE,
+        "Tope del precio para considerar como oferta"
+        topPrice: Float = -1,
+        "Tope para especificar por debajo que hay poco stock"
+        lastUnits: Int = -1,
+        "Seleccionar los elementos de manera aleatoria"
+        random: Boolean = false): ResultShopProduct
 }

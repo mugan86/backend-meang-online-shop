@@ -20,6 +20,21 @@ const resolversShopProductsQuery: IResolvers = {
         context
       ).items(active, platform, random);
     },
+    shopProductsOffersLast(_, { page, itemsPage, active, randomw, topPrice, lastUnits}, context) {
+        let otherFilters = {};
+        if (lastUnits > 0 && topPrice > 10) {
+          otherFilters = {
+            $and: [
+              {price: {$lte: topPrice}},
+              {stock: {$lte: topPrice}}
+            ]
+          };
+        } else if (lastUnits <= 0 && topPrice > 10) {
+          otherFilters =  {price: {$lte: topPrice}};
+        } else if (lastUnits > 0 && topPrice <= 10) {
+          otherFilters =  {stock: {$lte: topPrice}};
+        }
+    }
   },
 };
 
