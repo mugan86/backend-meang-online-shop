@@ -14,14 +14,13 @@ class ShopProductsService extends ResolversOperationsService {
     random: boolean = false,
     otherFilters: object = {}
   ) {
-    console.log(platform);
     let filter: object = { active: { $ne: false } };
     if (active === ACTIVE_VALUES_FILTER.ALL) {
       filter = {};
     } else if (active === ACTIVE_VALUES_FILTER.INACTIVE) {
       filter = { active: false };
     }
-    if (platform !== ['-1'] && platform !== undefined) {
+    if (platform[0] !== '-1' && platform !== undefined) {
       filter = {...filter, ...{platform_id: {$in: platform}}};
     }
 
