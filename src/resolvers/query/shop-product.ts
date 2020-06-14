@@ -43,7 +43,6 @@ const resolversShopProductsQuery: IResolvers = {
         ).items(active, ['-1'], random, otherFilters);
     },
     shopProductDetails(_, {id}, context) {
-      console.log(id, typeof id);
       return new ShopProductsService(
         _,
         {

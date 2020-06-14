@@ -68,7 +68,8 @@ class ShopProductsService extends ResolversOperationsService {
   }
 
   async details() {
-    console.log(this.getVariables().id);
+    const result = await this.get(this.collection);
+    return { status: result.status, message: result.message, shopProduct: result.item };
   }
 }
 
