@@ -66,6 +66,10 @@ class ShopProductsService extends ResolversOperationsService {
     };
     
   }
+
+  async details() {
+    console.log(this.getVariables().id);
+  }
 }
 
 export default ShopProductsService;
