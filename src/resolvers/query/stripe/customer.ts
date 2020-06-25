@@ -1,10 +1,10 @@
+import { STRIPE_OBJECTS, STRIPE_ACTIONS } from './../../../lib/stripe-api';
 import { IResolvers } from 'graphql-tools';
 import StripeApi from '../../../lib/stripe-api';
 import { IStripeCustomer } from '../../../interfaces/stripe/customer.interface';
 const resolversStripeCustomerQuery: IResolvers = {
   Query: {
     async customers(_, { limit, startingAfter, endingBefore } ) {
-        console.log(limit);
         let pagination;
         if (startingAfter !== '' && endingBefore === '') {
             pagination = { starting_after: startingAfter};
@@ -13,9 +13,9 @@ const resolversStripeCustomerQuery: IResolvers = {
         } else {
             pagination = {};
         }
-        console.log(pagination);
-        const stripe = new StripeApi().stripe;
-        return await stripe.customers.list(
+        return await new StripeApi().execute(
+            STRIPE_OBJECTS.CUSTOMERS,
+            STRIPE_ACTIONS.LIST,
             { limit, ...pagination }
         ).then((result: {has_more: boolean, data: Array<IStripeCustomer>}) => {
             return {
