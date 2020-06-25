@@ -6,4 +6,8 @@ type Query {
         startingAfter: ID = "",
         "Terminar antes de este usuario (para mostrar los anteriores)"
         endingBefore: ID = ""): ResultStripeCustomer
+    "Obtener detalles del cliente seleccionado"
+    customer(
+        "ID del cliente de Stripe"
+        id: ID!): ResultStripeCustomer
 }
