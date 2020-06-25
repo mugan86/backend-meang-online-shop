@@ -1,0 +1,7 @@
+type ResultStripeCustomer implements Result {
+    status: Boolean!
+    message: String!
+    hasMore: Boolean!
+    customer: StripeCustomer
+    customers: [StripeCustomer]
+}
