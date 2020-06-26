@@ -12,25 +12,12 @@ class ChargeService extends StripeApi{
             STRIPE_OBJECTS.CHARGES,
             STRIPE_ACTIONS.CREATE,
             payment
-        ).then((result: ICharge) => {
+        ).then((result: {id: string}) => {
             // Hacer copia de los datos destacados en nuestra base de datos
             return {
                 status: true,
                 message: `Procesado correctamente el pedido ${result.id}`,
-                charge: {
-                    id: result.id,
-                    typeOrder: result.object,
-                    customer: result.customer,
-                    amount: result.amount / 100,
-                    created: result.created,
-                    currency: result.currency.toUpperCase(),
-                    description: result.description,
-                    paid: result.paid,
-                    card: result.payment_method,
-                    receiptEmail: result.receipt_email,
-                    receiptUrl: result.receipt_url,
-                    status: result.status
-                }
+                charge: result
             };
         }).catch((error: Error) => this.getError(error));
     }
