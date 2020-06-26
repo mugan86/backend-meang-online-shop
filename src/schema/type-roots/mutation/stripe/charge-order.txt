@@ -1,0 +1,10 @@
+mutation {
+  chargeOrder(payment: {
+    amount: 1000,
+    description: "Cazuelas",
+    user: "cus_HXQDHD6XHyqPYF"
+  }) {
+    status
+    message
+  } 
+}

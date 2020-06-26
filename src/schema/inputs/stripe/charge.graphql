@@ -1,0 +1,15 @@
+input ChargeInput {
+    """
+    Token en el caso de que estemos obteniendo 
+    la información después de haber introducido la tarjeta de crédito
+    """
+    token: String
+    "Cantidad a pagar"
+    amount: Float!
+    "Descripción de todo lo que vamos a comprar"
+    description: String!
+    "ID del usuario"
+    user: ID!
+    "Divisa en la que pagaremos"
+    currency: CurrencyEnum=EUR
+}
