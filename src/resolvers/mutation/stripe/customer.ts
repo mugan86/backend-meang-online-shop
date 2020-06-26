@@ -56,7 +56,6 @@ const resolversStripeCustomerMutation: IResolvers = {
         });
     },
     async updateCustomer(_, { id, customer}) {
-      console.log(id, customer);
       return await new StripeApi().execute(
         STRIPE_OBJECTS.CUSTOMERS,
         STRIPE_ACTIONS.UPDATE,
@@ -74,6 +73,35 @@ const resolversStripeCustomerMutation: IResolvers = {
           message: 'Error: '.concat(error.message)
         };
       });
+    },
+    async deleteCustomer(_, {id}, { db }) {
+      return await new StripeApi().execute(
+        STRIPE_OBJECTS.CUSTOMERS,
+        STRIPE_ACTIONS.DELETE,
+        id
+      ).then(async(result: {id: string, deleted: boolean}) => {
+        if (result.deleted) {
+          const resultOperation = await db
+          .collection(COLLECTIONS.USERS)
+          .updateOne({stripeCustomer: result.id}, { $unset: { stripeCustomer: result.id } });
+          return {
+            status: result.deleted && resultOperation ? true : false,
+            message: result.deleted && resultOperation ? 
+                      `Usuario ${id} actualizado correctamente` : 
+                      `Usuario no se ha actualizado correctamente en la base de datos nuestra`,
+          };
+        }
+        return {
+          status: false,
+          message: `Usuario ${id} NO SE HA actualizado. Compruebalo`,
+        };
+        
+      }).catch((error: Error) => {
+        return {
+          status: false,
+          message: 'Error: '.concat(error.message)
+        };
+      }); 
     }
   },
 };
