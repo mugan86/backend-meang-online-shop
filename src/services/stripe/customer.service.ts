@@ -17,7 +17,7 @@ class StripeCustomerService extends StripeApi {
     } else {
       pagination = {};
     }
-    return await new StripeApi()
+    return await this
       .execute(STRIPE_OBJECTS.CUSTOMERS, STRIPE_ACTIONS.LIST, {
         limit,
         ...pagination,
@@ -34,7 +34,7 @@ class StripeCustomerService extends StripeApi {
       .catch((error: Error) => this.getError(error));
   }
   async get(id: string) {
-    return await new StripeApi()
+    return await this
     .execute(STRIPE_OBJECTS.CUSTOMERS, STRIPE_ACTIONS.GET, id)
     .then(async (result: IStripeCustomer) => {
       return {
@@ -50,7 +50,7 @@ class StripeCustomerService extends StripeApi {
       // devolver diciendo que no se puede añadir
       const userCheckExist: {
         data: Array<IStripeCustomer>;
-      } = await new StripeApi().execute(
+      } = await this.execute(
         STRIPE_OBJECTS.CUSTOMERS,
         STRIPE_ACTIONS.LIST,
         { email }
@@ -62,7 +62,7 @@ class StripeCustomerService extends StripeApi {
           message: `El usuario con el email ${email} ya existe en el sistema`,
         };
       }
-      return await new StripeApi()
+      return await this
         .execute(STRIPE_OBJECTS.CUSTOMERS, STRIPE_ACTIONS.CREATE, {
           name,
           email,
@@ -87,7 +87,7 @@ class StripeCustomerService extends StripeApi {
         .catch((error: Error) => this.getError(error));
   }
   async update(id: string, customer: IStripeCustomer) {
-    return await new StripeApi().execute(
+    return await this.execute(
         STRIPE_OBJECTS.CUSTOMERS,
         STRIPE_ACTIONS.UPDATE,
         id,
@@ -101,7 +101,7 @@ class StripeCustomerService extends StripeApi {
       }).catch((error: Error) =>  this.getError(error));
   }
   async delete(id: string, db: Db) {
-    return await new StripeApi().execute(
+    return await this.execute(
         STRIPE_OBJECTS.CUSTOMERS,
         STRIPE_ACTIONS.DELETE,
         id

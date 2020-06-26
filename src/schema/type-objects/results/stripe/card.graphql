@@ -1,6 +1,7 @@
 type ResultStripeCard implements Result {
     status: Boolean!
     message: String!
-    token: String!
+    token: String
     fingerprint: String
+    card: String
 }
