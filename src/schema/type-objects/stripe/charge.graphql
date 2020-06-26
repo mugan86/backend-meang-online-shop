@@ -2,13 +2,18 @@
 type StripeCharge {
     "Identificador del cargo"
     id: String!
+    "Cantidad pagada"
+    currency: CurrencyEnum
+    amount: Float!
     status: String!
     receiptUrl: String!
     receiptEmail: String!
-    card: String!
     paid: Boolean
     "Momento en que se ha ejecutado el pago. Este número x 1000 y pasar el Date()"
     created: Int!
     "Pago o suscripción"
     typeOrder: String
+    description: String!
+    customer: ID
+    card: ID!
 }

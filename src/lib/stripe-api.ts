@@ -1,4 +1,5 @@
 export const STRIPE_OBJECTS = {
+    CHARGES: 'charges',
     CUSTOMERS: 'customers',
     TOKENS: 'tokens'
 };

@@ -9,7 +9,7 @@ input ChargeInput {
     "Descripción de todo lo que vamos a comprar"
     description: String!
     "ID del usuario"
-    user: ID!
+    customer: ID!
     "Divisa en la que pagaremos"
     currency: CurrencyEnum=EUR
 }
