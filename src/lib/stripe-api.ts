@@ -1,5 +1,6 @@
 export const STRIPE_OBJECTS = {
     CUSTOMERS: 'customers',
+    TOKENS: 'tokens'
 };
 
 export const STRIPE_ACTIONS = {
