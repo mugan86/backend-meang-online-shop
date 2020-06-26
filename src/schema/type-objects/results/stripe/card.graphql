@@ -1,0 +1,5 @@
+type ResultStripeCard implements Result {
+    status: Boolean!
+    message: String!
+    token: String!
+}

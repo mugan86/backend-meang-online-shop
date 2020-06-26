@@ -1,0 +1,4 @@
+type Mutation {
+    "Crear el token que utilizaremos para realizar los pagos con tarjeta"
+    createCardToken(card: CardInput): ResultStripeCard
+}
