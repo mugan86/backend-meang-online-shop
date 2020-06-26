@@ -20,6 +20,16 @@ class StripeApi {
     ]) {
         return await this.stripe[object][action](...args);
     }
+
+    protected async getError(error: Error) {
+        {
+            return {
+              status: false,
+              message: 'Error: '.concat(error.message),
+              hasMore: false,
+            };
+          }
+    }
 }
 
 export default StripeApi;
