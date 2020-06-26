@@ -55,6 +55,9 @@ const resolversStripeCustomerMutation: IResolvers = {
           };
         });
     },
+    async updateCustomer(_, { id, customer}) {
+      console.log(id, customer);
+    }
   },
 };
 
