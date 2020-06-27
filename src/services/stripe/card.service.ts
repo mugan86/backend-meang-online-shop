@@ -28,7 +28,11 @@ class StripeCardService extends StripeApi {
       });
   }
 
-  async create(customer: string, tokenCard: string) {
+  async create(customer: string, tokenCard: string, fingerprint: string) {
+    // Validar que tarjeta no existe.
+    // Si existe, mostrar mensaje de"error"
+
+    // Si no existe la tarjeta, la añadimos
       return this.execute(
           STRIPE_OBJECTS.CUSTOMERS,
           STRIPE_ACTIONS.CREATE_SOURCE,
