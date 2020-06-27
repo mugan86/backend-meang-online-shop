@@ -15,11 +15,12 @@ class StripeCardService extends StripeApi {
           cvc: card.cvc
         },
       })
-      .then((result: { id: string }) => {
+      .then((result: { id: string, card: { fingerprint: string} }) => {
         return {
           status: true,
           message: `Token ${result.id} creado correctamente`,
           token: result.id,
+          fingerprint: result.card.fingerprint
         };
       })
       .catch((error: Error) => {
@@ -28,7 +29,18 @@ class StripeCardService extends StripeApi {
   }
 
   async create(customer: string, tokenCard: string) {
-   
+      return this.execute(
+          STRIPE_OBJECTS.CUSTOMERS,
+          STRIPE_ACTIONS.CREATE_SOURCE,
+          customer,
+          {source: tokenCard}
+      ).then((result: {id: string}) => {
+          return {
+              status: true,
+              message: `Tarjeta ${result.id} añadida correctamente al cliente ${customer}`,
+              card: result.id
+          };
+      }).catch((error: Error) => this.getError(error));
   }
 }
 
