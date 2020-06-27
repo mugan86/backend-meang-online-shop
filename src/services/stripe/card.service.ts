@@ -39,6 +39,7 @@ class StripeCardService extends StripeApi {
       return {
         status: false,
         message: `Tarjeta que estás creando ya existe en tu cuenta`,
+        card: undefined
       };
     }
     // No está registrada

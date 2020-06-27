@@ -86,7 +86,7 @@ class StripeCustomerService extends StripeApi {
         })
         .catch((error: Error) => this.getError(error));
   }
-  async update(id: string, customer: IStripeCustomer) {
+  async update(id: string, customer: IStripeCustomer | object) {
     return await this.execute(
         STRIPE_OBJECTS.CUSTOMERS,
         STRIPE_ACTIONS.UPDATE,

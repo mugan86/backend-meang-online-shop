@@ -3,5 +3,7 @@ export interface IPayment {
     description: string;
     currency: string;
     token: string;
-    user: string;
+    customer: string;
+    cart: string;
+    fingerprint: string;
 }

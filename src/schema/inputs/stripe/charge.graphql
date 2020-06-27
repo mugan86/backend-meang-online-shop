@@ -1,4 +1,6 @@
 input ChargeInput {
+    "fingerprint - Huella dactilar - número único de la tarjeta"
+    fingerprint: String
     """
     Token en el caso de que estemos obteniendo 
     la información después de haber introducido la tarjeta de crédito
@@ -12,4 +14,5 @@ input ChargeInput {
     customer: ID!
     "Divisa en la que pagaremos"
     currency: CurrencyEnum=EUR
+    cart: String
 }
