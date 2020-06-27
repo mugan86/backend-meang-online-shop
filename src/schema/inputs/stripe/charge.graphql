@@ -1,0 +1,12 @@
+input ChargeInput {
+    token: String
+    "Cantidad a pagar, cuidado con la divida y que hacemos la conversión"
+    amount: String!
+    "Resumen de lo que pediremos (lista de los pedidos)"
+    description: String!
+    "Cliente ID"
+    customer: ID!
+    "Divia que estaré utilizando. Por defecto: Euro"
+    currency: CurrencyEnum = EUR
+    fingerprint: String
+}
