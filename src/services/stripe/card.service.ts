@@ -26,6 +26,10 @@ class StripeCardService extends StripeApi {
         console.log(error.message);
       });
   }
+
+  async create(customer: string, tokenCard: string) {
+   
+  }
 }
 
 export default StripeCardService;
