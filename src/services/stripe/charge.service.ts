@@ -21,7 +21,7 @@ class StripeChargeService extends StripeApi {
             pay.customer, pay.token, pay.fingerprint
         );
         console.log(cardCreate);
-        if (!cardCreate.status) {
+        if (!cardCreate.status && cardCreate.message != 'Tarjeta que quieres añadir ya existe para este cliente') {
             return {
                 status: false,
                 message: 'Error tarjeta añadiendo'
@@ -50,6 +50,8 @@ class StripeChargeService extends StripeApi {
           'El cliente seleccionado no existe y no podremos realizar pagos con esta información',
       };
     }
+    delete pay.fingerprint;
+    delete pay.token;
     pay.amount = +(Math.round(+pay.amount * 100) / 100).toFixed(2);
     pay.amount *= 100;
     console.log(pay);
@@ -61,7 +63,7 @@ class StripeChargeService extends StripeApi {
       .then((result: object) => {
         return {
           status: true,
-          message: 'Pago procesardo correctamente',
+          message: 'Pago procesado correctamente',
           charge: result,
         };
       })
