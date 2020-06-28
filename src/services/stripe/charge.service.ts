@@ -10,10 +10,11 @@ class StripeChargeService extends StripeApi {
             STRIPE_OBJECTS.CHARGES,
             STRIPE_ACTIONS.CREATE,
             pay
-        ).then((_: object) => {
+        ).then((result: object) => {
             return {
                 status: true,
-                message: 'Pago procesardo correctamente'
+                message: 'Pago procesardo correctamente',
+                charge: result
             };
         }).catch((error: Error) => this.getError(error));
     }

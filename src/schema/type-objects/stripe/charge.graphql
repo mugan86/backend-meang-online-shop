@@ -1,3 +1,20 @@
 type StripeCharge {
-    id: ID
+    "Id del cargo / pago realizado"
+    id: ID!
+    "Cantidad que hemos pagado"
+    amount: Float!
+    "Estato del pedido"
+    status: String!
+    "Email del comprador"
+    receiptEmail: String!
+    "La url de la factura generada"
+    receiptUrl: String!
+    "Pagado o no"
+    paid: Boolean!
+    created: String!
+    "El tipo de operación (pago o suscripción)"
+    typeOrder: String!
+    description: String!
+    card: String!
+    customer: String!
 }
