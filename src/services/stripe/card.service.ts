@@ -40,6 +40,7 @@ class StripeCardService extends StripeApi {
       return {
         status: false,
         message: `Tarjeta que quieres añadir ya existe para este cliente`,
+        card: undefined
       };
     }
 
