@@ -15,26 +15,30 @@ class StripeChargeService extends StripeApi {
     const customerData = await this.getClient(pay.customer);
     if (customerData.status) {
       console.log('Cliente asignado correcamente');
-      if (pay.token !== undefined && pay.fingerprint !== undefined) {
+      if (pay.token !== undefined) {
         console.log('Nuevos datos');
         const cardCreate = await new StripeCardService().create(
-            pay.customer, pay.token, pay.fingerprint
+            pay.customer, pay.token
         );
         console.log(cardCreate);
-        if (!cardCreate.status && cardCreate.message != 'Tarjeta que quieres añadir ya existe para este cliente') {
+        /*if (!cardCreate.status && cardCreate.message != 'Tarjeta que quieres añadir ya existe para este cliente') {
             return {
                 status: false,
                 message: 'Error tarjeta añadiendo'
             };
-        }
+        }*/
 
         await new StripeCustomerService().update(pay.customer, {
             default_source: cardCreate.card
         });
 
+        // Borrar para evitar duplicados
+        await new StripeCardService().deleteDuplicates(
+          pay.customer, cardCreate.card || ''
+        );
+
       } else if (
         pay.token === undefined &&
-        pay.fingerprint === undefined &&
         customerData.customer?.default_source === null
       ) {
           return {

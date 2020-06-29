@@ -1,0 +1,5 @@
+type Query {
+    getCard(id: ID!): ResultStripeCard
+    getCardByToken(token: ID!): ResultStripeCard
+    cards: ResultStripeCard
+}

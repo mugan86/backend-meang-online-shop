@@ -8,7 +8,7 @@ const resolversStripeCardMutation: IResolvers = {
       return new StripeCardService().createToken(card);
     },
     async createCard(_, { customer, tokenCard, fingerprint}) {
-      return new StripeCardService().create(customer, tokenCard, fingerprint);
+      return new StripeCardService().create(customer, tokenCard);
     }
   },
 };

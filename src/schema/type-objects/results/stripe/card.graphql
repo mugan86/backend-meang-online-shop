@@ -4,4 +4,10 @@ type ResultStripeCard implements Result {
     token: String!
     fingerprint: String!
     card: ID
+    cards: [StripeCard]
+}
+
+type StripeCard {
+    id: ID!
+    fingerprint: String
 }
