@@ -95,12 +95,22 @@ class StripeCardService extends StripeApi {
     })
     .catch((error: Error) =>  this.getError(error));
   }
-  async list() {
-    /**
-     * stripe.customers.listSources(
-  'cus_HYk10aGKeW7sou',
-  {object: 'card', limit: 3},
-     */
+  async list(customer: string, limit: number, startingAfter: string, endingBefore: string) {
+    const pagination = this.getPagination(startingAfter, endingBefore);
+      return await this.execute(
+        STRIPE_OBJECTS.CUSTOMERS,
+        STRIPE_ACTIONS.LIST_SOURCE,
+        customer,
+        {object: 'card', limit, ...pagination},
+      ).then((result: {has_more: boolean, data: Array<IStripeCard>}) => {
+        return {
+          status: true,
+          message: `Lista de tarjetas mostrado correctamente`,
+          cards: result.data,
+          hasMore: result.has_more
+        };
+      })
+      .catch((error: Error) =>  this.getError(error));
   }
 }
 

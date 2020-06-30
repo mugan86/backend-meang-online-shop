@@ -9,14 +9,7 @@ import { Db } from 'mongodb';
 class StripeCustomerService extends StripeApi {
   // Clientes lista
   async list(limit: number, startingAfter: string, endingBefore: string) {
-    let pagination;
-    if (startingAfter !== '' && endingBefore === '') {
-      pagination = { starting_after: startingAfter };
-    } else if (startingAfter === '' && endingBefore !== '') {
-      pagination = { ending_before: endingBefore };
-    } else {
-      pagination = {};
-    }
+    const pagination = this.getPagination(startingAfter, endingBefore);
     return await this
       .execute(STRIPE_OBJECTS.CUSTOMERS, STRIPE_ACTIONS.LIST, {
         limit,
