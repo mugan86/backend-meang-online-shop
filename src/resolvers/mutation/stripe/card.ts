@@ -9,6 +9,9 @@ const resolversStripeCardMutation: IResolvers = {
     },
     async createCard(_, { customer, tokenCard}) {
       return new StripeCardService().create(customer, tokenCard);
+    },
+    async updateCard(_, { customer, card, details} ) {
+      return new StripeCardService().update(customer, card, details);
     }
   },
 };

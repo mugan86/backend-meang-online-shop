@@ -10,7 +10,8 @@ export const STRIPE_ACTIONS = {
     GET: 'retrieve',
     GET_SOURCE: 'retrieveSource',
     LIST: 'list',
-    UPDATE: 'update'
+    UPDATE: 'update',
+    UPDATE_SOURCE : 'updateSource'
 };
 
 class StripeApi {
@@ -19,7 +20,7 @@ class StripeApi {
     });
 
     async execute(object: string, action: string, ...args: [
-        (string | object ), (string | object)?
+        (string | object ), (string | object)?, (string | object)?
     ]) {
         return await this.stripe[object][action](...args);
     }

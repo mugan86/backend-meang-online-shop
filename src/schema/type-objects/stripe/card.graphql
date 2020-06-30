@@ -3,4 +3,5 @@ type StripeCard {
     brand: String!
     country: String!
     customer: String!
+    name: String
 }

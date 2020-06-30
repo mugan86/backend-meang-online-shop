@@ -5,3 +5,7 @@ input CardInput {
     cvc: String!
     currency: CurrencyEnum = EUR
 }
+
+input CardDetailsInput {
+    name: String
+}

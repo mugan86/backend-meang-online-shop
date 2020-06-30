@@ -59,6 +59,24 @@ class StripeCardService extends StripeApi {
     })
     .catch((error: Error) =>  this.getError(error));
   }
+
+  async update (customer: string, card: string, details: object) {
+      return await this.execute(
+        STRIPE_OBJECTS.CUSTOMERS,
+        STRIPE_ACTIONS.UPDATE_SOURCE,
+        customer,
+        card,
+        details
+      ).then((result: IStripeCard) => {
+        return {
+          status: true,
+          message: `Actualizado ${result.id} correctamente`,
+          id: result.id,
+          card: result
+        };
+      })
+      .catch((error: Error) =>  this.getError(error));
+  }
 }
 
 export default StripeCardService;

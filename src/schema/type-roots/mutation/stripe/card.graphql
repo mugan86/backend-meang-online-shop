@@ -3,4 +3,6 @@ type Mutation {
     createCardToken(card: CardInput): ResultStripeCard
     "Creamos la tarjeta asociada al cliente"
     createCard(customer: ID!, tokenCard: String!): ResultStripeCard
+    "Creamos la tarjeta asociada al cliente"
+    updateCard(customer: ID!, card: ID!, details: CardDetailsInput!): ResultStripeCard
 }
