@@ -28,7 +28,21 @@ class StripeCardService extends StripeApi {
   }
 
   async create(customer: string, tokenCard: string) {
-   
+      return this.execute(
+        STRIPE_OBJECTS.CUSTOMERS,
+        STRIPE_ACTIONS.CREATE_SOURCE,
+        customer,
+        { source: tokenCard }
+      ).then((result: { id: string }) => {
+        return {
+          status: true,
+          message: `Tarjeta ${result.id} creada correctamente`,
+          card: result.id
+        };
+      })
+      .catch((error: Error) => {
+        console.log(error.message);
+      });
   }
 }
 
