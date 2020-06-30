@@ -77,6 +77,24 @@ class StripeCardService extends StripeApi {
       })
       .catch((error: Error) =>  this.getError(error));
   }
+
+  async delete (customer: string, card: string) {
+    return await this.execute(
+      STRIPE_OBJECTS.CUSTOMERS,
+      STRIPE_ACTIONS.DELETE_SOURCE,
+      customer,
+      card
+    ).then((result: {id: string, deleted: boolean}) => {
+      return {
+        status: result.deleted,
+        message: result.deleted ? 
+        `El item ${result.id} ha sido borrado satisfactoriamente` :
+        `El item ${result.id} no se ha borrado`,
+        id: result.id,
+      };
+    })
+    .catch((error: Error) =>  this.getError(error));
+  }
 }
 
 export default StripeCardService;
