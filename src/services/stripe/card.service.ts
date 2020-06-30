@@ -95,6 +95,13 @@ class StripeCardService extends StripeApi {
     })
     .catch((error: Error) =>  this.getError(error));
   }
+  async list() {
+    /**
+     * stripe.customers.listSources(
+  'cus_HYk10aGKeW7sou',
+  {object: 'card', limit: 3},
+     */
+  }
 }
 
 export default StripeCardService;
