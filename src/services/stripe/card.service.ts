@@ -32,11 +32,11 @@ class StripeCardService extends StripeApi {
       customer,
       { source: tokenCard }
     )
-      .then((result: { id: string }) => {
+      .then((result: { id: string, card: { fingerprint: string} }) => {
         return {
           status: true,
           message: `Tarjeta ${result.id} añadida correctamente al cliente ${customer}`,
-          card: result.id,
+          card: result.id
         };
       })
       .catch((error: Error) => this.getError(error));
@@ -92,7 +92,7 @@ class StripeCardService extends StripeApi {
     console.log(listCards);
     listCards.map( async (item: IStripeCard) => {
       console.log(item.id, noDeleteCard);
-      if (item.id !== noDeleteCard) {
+      if (item.id !== noDeleteCard && noDeleteCard != '') {
         // Borrar
         await this.delete(item.id || '', customer);
       }

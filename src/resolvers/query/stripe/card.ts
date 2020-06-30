@@ -12,7 +12,7 @@ const resolversStripeCardQuery: IResolvers = {
     },
 
     async cards() {
-      return new StripeCardService().list('cus_HXQDB5tseeTJSY');
+      return new StripeCardService().list('cus_HXQDHD6XHyqPYF');
     }
   },
 };
