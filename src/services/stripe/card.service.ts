@@ -43,12 +43,21 @@ class StripeCardService extends StripeApi {
       })
       .catch((error: Error) =>  this.getError(error));
   }
-  get (customer: string, card: string) {
-    /**
-     * stripe.customers.retrieveSource(
-  'cus_HYkK7LJpLRrNs7',
-  'card_1GzcpIEl8FzvNIw54IfQu5LV'
-     */
+  async get (customer: string, card: string) {
+    return await this.execute(
+      STRIPE_OBJECTS.CUSTOMERS,
+      STRIPE_ACTIONS.GET_SOURCE,
+      customer,
+      card
+    ).then((result: IStripeCard) => {
+      return {
+        status: true,
+        message: `Detalle de la tarjeta ${result.id} mostrado correctamente`,
+        id: result.id,
+        card: result
+      };
+    })
+    .catch((error: Error) =>  this.getError(error));
   }
 }
 
