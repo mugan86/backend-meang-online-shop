@@ -33,16 +33,22 @@ class StripeCardService extends StripeApi {
         STRIPE_ACTIONS.CREATE_SOURCE,
         customer,
         { source: tokenCard }
-      ).then((result: { id: string }) => {
+      ).then((result: IStripeCard) => {
         return {
           status: true,
           message: `Tarjeta ${result.id} creada correctamente`,
-          card: result.id
+          id: result.id,
+          card: result
         };
       })
-      .catch((error: Error) => {
-        console.log(error.message);
-      });
+      .catch((error: Error) =>  this.getError(error));
+  }
+  get (customer: string, card: string) {
+    /**
+     * stripe.customers.retrieveSource(
+  'cus_HYkK7LJpLRrNs7',
+  'card_1GzcpIEl8FzvNIw54IfQu5LV'
+     */
   }
 }
 

@@ -8,6 +8,7 @@ export const STRIPE_ACTIONS = {
     CREATE_SOURCE: 'createSource',
     DELETE: 'del',
     GET: 'retrieve',
+    GET_SOURCE: 'retrieveSource',
     LIST: 'list',
     UPDATE: 'update'
 };

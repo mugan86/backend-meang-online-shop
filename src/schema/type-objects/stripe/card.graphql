@@ -1,0 +1,6 @@
+type StripeCard {
+    id: ID!
+    brand: String!
+    country: String!
+    customer: String!
+}

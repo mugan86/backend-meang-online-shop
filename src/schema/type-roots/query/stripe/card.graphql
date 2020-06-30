@@ -1,0 +1,3 @@
+type Query {
+    card(customer: ID!, card: ID!): ResultStripeCard
+} 
