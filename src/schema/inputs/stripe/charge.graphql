@@ -1,0 +1,11 @@
+input ChargeInput {
+    token: String
+    "Cantidad a pagar en formato string, para convertilo a entero cero decimal"
+    amount: String!
+    "Resumen del pedido"
+    description: String!
+    "Cliente (ID)"
+    customer: ID!
+    "Divisa"
+    currency: CurrencyEnum = EUR
+}
