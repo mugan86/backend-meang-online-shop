@@ -1,6 +1,7 @@
 import { IPayment } from './../../interfaces/stripe/payment.interface';
 import StripeApi, { STRIPE_OBJECTS, STRIPE_ACTIONS } from '../../lib/stripe-api';
 import StripeCustomerService from './customer.service';
+import StripeCardService from './card.service';
 
 class StripeChargeService extends StripeApi {
     private async getClient(customer: string) {
@@ -13,9 +14,15 @@ class StripeChargeService extends StripeApi {
             console.log('Cliente encontrado');
             if (payment.token !== undefined) {
                 // Asociar el cliente a la tarjeta
-
+                const cardCreate = await new StripeCardService().create(
+                    payment.customer, payment.token
+                );
                 // Actualizar como fuente predeterminada de pago
-
+                    await new StripeCustomerService().update(
+                        payment.customer, {
+                            default_source: cardCreate.card?.id
+                        }
+                    );
                 // Actualizar borrando las demás tarjetas de ese cliente
             } else if (payment.token === undefined &&
                 userData.customer?.default_source === null) {
@@ -30,6 +37,7 @@ class StripeChargeService extends StripeApi {
                 message: 'El cliente no encontrado y no se puede realizar pago'
             };
         }
+        delete payment.token;
         // Convertir a 0 decimal
         payment.amount = Math.round((+payment.amount + Number.EPSILON) * 100)/ 100;
         payment.amount *= 100;
