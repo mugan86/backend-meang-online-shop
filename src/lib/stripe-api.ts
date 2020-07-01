@@ -36,6 +36,8 @@ class StripeApi {
         status: false,
         message: 'Error: '.concat(error.message),
         hasMore: false,
+        customer: undefined,
+        card: undefined
       };
     }
   }
