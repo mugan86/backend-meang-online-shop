@@ -37,7 +37,8 @@ class StripeApi {
         message: 'Error: '.concat(error.message),
         hasMore: false,
         customer: undefined,
-        card: undefined
+        card: undefined,
+        cards: undefined
       };
     }
   }

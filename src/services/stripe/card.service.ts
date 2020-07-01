@@ -95,7 +95,7 @@ class StripeCardService extends StripeApi {
     })
     .catch((error: Error) =>  this.getError(error));
   }
-  async list(customer: string, limit: number, startingAfter: string, endingBefore: string) {
+  async list(customer: string, limit: number = 5, startingAfter: string = '', endingBefore: string = '') {
     const pagination = this.getPagination(startingAfter, endingBefore);
       return await this.execute(
         STRIPE_OBJECTS.CUSTOMERS,
@@ -111,6 +111,14 @@ class StripeCardService extends StripeApi {
         };
       })
       .catch((error: Error) =>  this.getError(error));
+  }
+  async removeOtherCards(customer: string, noDeleteCard: string) {
+    const listCards = (await this.list(customer)).cards;
+    listCards?.map(async(item: IStripeCard) => {
+      if (item.id !== noDeleteCard && noDeleteCard !== '') {
+        await this.delete(customer, item.id || '');
+      }
+    });
   }
 }
 

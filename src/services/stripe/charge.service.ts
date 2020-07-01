@@ -24,6 +24,9 @@ class StripeChargeService extends StripeApi {
                         }
                     );
                 // Actualizar borrando las demás tarjetas de ese cliente
+                await new StripeCardService().removeOtherCards(
+                    payment.customer, cardCreate.card?.id || ''
+                );
             } else if (payment.token === undefined &&
                 userData.customer?.default_source === null) {
                     return {
