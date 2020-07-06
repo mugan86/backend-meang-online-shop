@@ -22,4 +22,6 @@ type User {
     "Permisos del usuario"
     role: Role!
     active: Boolean
+    "Cliente de Stripe"
+    stripeCustomer: String
 }
