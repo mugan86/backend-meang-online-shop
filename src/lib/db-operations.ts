@@ -112,3 +112,14 @@ export const randomItems = async(
   });
 };
 
+export const manageStockUpdate = async (
+  database: Db,
+  collection: string,
+  filter: object,
+  updateStockObject: object
+) => {
+  return await database
+    .collection(collection)
+    .updateOne(filter, updateStockObject);
+};
+

@@ -1,0 +1,7 @@
+type Mutation {
+    """
+    Para actualizar la información del stock. Se puede actualizar 
+    un producto o más
+    """
+    updateStock(update: [ShopProductStockInput!]!): Boolean
+}

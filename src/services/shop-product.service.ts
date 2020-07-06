@@ -1,4 +1,5 @@
-import { randomItems } from './../lib/db-operations';
+import { IStock } from './../interfaces/stock.interface';
+import { randomItems, manageStockUpdate } from './../lib/db-operations';
 import { COLLECTIONS, ACTIVE_VALUES_FILTER } from './../config/constants';
 import ResolversOperationsService from './resolvers-operations.service';
 
@@ -21,15 +22,15 @@ class ShopProductsService extends ResolversOperationsService {
       filter = { active: false };
     }
     if (platform[0] !== '-1' && platform !== undefined) {
-      filter = {...filter, ...{platform_id: {$in: platform}}};
+      filter = { ...filter, ...{ platform_id: { $in: platform } } };
     }
 
     if (otherFilters !== {} && otherFilters !== undefined) {
-      filter = {...filter, ...otherFilters};
+      filter = { ...filter, ...otherFilters };
     }
     const page = this.getVariables().pagination?.page;
     const itemsPage = this.getVariables().pagination?.itemsPage;
-    if(!random) {
+    if (!random) {
       const result = await this.list(
         this.collection,
         'productos de la tienda',
@@ -49,27 +50,49 @@ class ShopProductsService extends ResolversOperationsService {
       this.collection,
       filter,
       itemsPage
-    ); 
+    );
     if (result.length === 0 || result.length !== itemsPage) {
       return {
-        info: { page: 1, pages: 1, itemsPage, total: 0},
+        info: { page: 1, pages: 1, itemsPage, total: 0 },
         status: false,
-        message: 'La información que hemos pedido no se ha obtenido tal y como deseabamos',
+        message:
+          'La información que hemos pedido no se ha obtenido tal y como deseabamos',
         shopProducts: [],
       };
     }
     return {
-      info: { page: 1, pages: 1, itemsPage, total: itemsPage},
+      info: { page: 1, pages: 1, itemsPage, total: itemsPage },
       status: true,
       message: 'La información que hemos pedido se ha cargado correctamente',
       shopProducts: result,
     };
-    
   }
 
   async details() {
     const result = await this.get(this.collection);
-    return { status: result.status, message: result.message, shopProduct: result.item };
+    return {
+      status: result.status,
+      message: result.message,
+      shopProduct: result.item,
+    };
+  }
+
+  async updateStock(updateList: Array<IStock>) {
+    try {
+      updateList.map(async (item: IStock) => {
+        console.log(item);
+        await manageStockUpdate(
+          this.getDb(),
+          COLLECTIONS.SHOP_PRODUCT,
+          { id: +item.id },
+          { $inc: { stock: item.increment } }
+        );
+      });
+      return true;
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
   }
 }
 
