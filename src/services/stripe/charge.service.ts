@@ -42,8 +42,14 @@ class StripeChargeService extends StripeApi {
         }
         delete payment.token;
         // Convertir a 0 decimal
-        payment.amount = Math.round((+payment.amount + Number.EPSILON) * 100)/ 100;
+        payment.amount = +Math.round((+payment.amount + Number.EPSILON) * 100)/ 100;
         payment.amount *= 100;
+        if (payment.amount === parseInt(payment.amount.toString(), 10)) {
+            console.log('Integer! OK!');
+        } else {
+            console.log('Not integer!!');
+            payment.amount = Math.ceil(payment.amount);
+        }
         // Pago
         return await this.execute(
             STRIPE_OBJECTS.CHARGES,
