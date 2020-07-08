@@ -1,0 +1,3 @@
+type Subscription {
+    updateProductStock(productId: Int!): ShopProduct
+}
