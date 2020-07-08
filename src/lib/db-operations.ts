@@ -112,3 +112,14 @@ export const randomItems = async(
   });
 };
 
+// Gestión del stock de productos
+export const manageStockUpdate = async (
+  database: Db,
+  collection: string,
+  filter: object,
+  updateObject: object
+) => {
+  return await database
+    .collection(collection)
+    .updateOne(filter, { $inc: updateObject });
+};
