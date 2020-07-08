@@ -51,6 +51,7 @@
     "nodemailer": "^6.4.10",
     "slugify": "^1.4.4",
     "stripe": "^8.69.0",
+    "subscriptions-transport-ws": "^0.9.16",
     "typescript": "^3.9.6"
   },
   "devDependencies": {
