@@ -2,6 +2,7 @@ import { IPayment } from './../../interfaces/stripe/payment.interface';
 import StripeApi, { STRIPE_OBJECTS, STRIPE_ACTIONS } from '../../lib/stripe-api';
 import StripeCustomerService from './customer.service';
 import StripeCardService from './card.service';
+import { IStripeCharge } from '../../interfaces/stripe/charge.interface';
 
 class StripeChargeService extends StripeApi {
     private async getClient(customer: string) {
@@ -56,6 +57,24 @@ class StripeChargeService extends StripeApi {
                 charge: result
             };
         }).catch((error: Error) => this.getError(error));
+    }
+
+    async listByCustomer(customer: string, limit: number, startingAfter: string, endingBefore: string) {
+        const pagination = this.getPagination(startingAfter, endingBefore);
+        return this.execute(
+            STRIPE_OBJECTS.CHARGES,
+            STRIPE_ACTIONS.LIST,
+            { limit, customer, ...pagination}
+        ).then((result: { has_more: boolean; data: Array<IStripeCharge> }) => {
+            return {
+              status: true,
+              message:
+                'Lista cargada correctamente con los pagos del cliente seleccionado',
+              hasMore: result.has_more,
+              charges: result.data,
+            };
+          })
+          .catch((error: Error) => this.getError(error));
     }
 }
 
