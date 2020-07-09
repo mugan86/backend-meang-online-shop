@@ -1,10 +1,22 @@
 import { IResolvers } from 'graphql-tools';
-const resolversShopProductsSubscription: IResolvers = {
+
+const subscriptions: IResolvers = {
   Subscription: {
-    updateProductStock: {
-        
+    newValue: {
+      subscribe: (_, __, {pubsub}) => {
+        return pubsub.asyncIterator([
+          'NEW_VALUE',
+        ]);
+      },
+    },
+    updateStockProduct: {
+      subscribe: (_, __, {pubsub}) => {
+        return pubsub.asyncIterator([
+          'STOCK',
+        ]);
+      },
     }
   },
 };
 
-export default resolversShopProductsSubscription;
+export default subscriptions;

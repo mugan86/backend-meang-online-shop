@@ -1,3 +1,4 @@
 type Subscription {
-    updateProductStock(productId: Int!): ShopProduct
+    newValue: Boolean
+    updateStockProduct: ShopProduct
 }

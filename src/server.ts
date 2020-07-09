@@ -17,12 +17,13 @@ if (process.env.NODE_ENV !== 'production') {
 
 async function init() {
   const app = express();
+  const pubsub = new PubSub();
 
   app.use('*', cors());
 
   app.use(compression());
 
-  const pubsub = new PubSub();
+  
 
   const database = new Database();
 

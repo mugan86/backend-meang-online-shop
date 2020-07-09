@@ -5,10 +5,12 @@ import { findOneElement } from '../../lib/db-operations';
 import UsersService from '../users.service';
 import { COLLECTIONS } from '../../config/constants';
 import { Db } from 'mongodb';
+import { PubSub } from 'apollo-server-express';
 
 class StripeCustomerService extends StripeApi {
   // Clientes lista
-  async list(limit: number, startingAfter: string, endingBefore: string) {
+  async list(limit: number, startingAfter: string, endingBefore: string, pubsub:PubSub) {
+    pubsub.publish('NEW_VALUE', { newValue: true});
     const pagination = this.getPagination(startingAfter, endingBefore);
     return await this
       .execute(STRIPE_OBJECTS.CUSTOMERS, STRIPE_ACTIONS.LIST, {
