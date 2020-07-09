@@ -1,4 +1,5 @@
 type Subscription {
     newValue: Boolean
     updateStockProduct: ShopProduct
+    updateStockSelectProduct(id: Int!): ShopProduct
 }

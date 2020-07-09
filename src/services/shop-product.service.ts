@@ -1,5 +1,5 @@
 import { randomItems, manageStockUpdate, findOneElement } from './../lib/db-operations';
-import { COLLECTIONS, ACTIVE_VALUES_FILTER } from './../config/constants';
+import { COLLECTIONS, ACTIVE_VALUES_FILTER, SUBSCRIPTIONS } from './../config/constants';
 import ResolversOperationsService from './resolvers-operations.service';
 import { IStock } from '../interfaces/stock.interface';
 import { PubSub } from 'apollo-server-express';
@@ -78,17 +78,21 @@ class ShopProductsService extends ResolversOperationsService {
     try {
       updateList.map(async(item: IStock) => {
         console.log(item);
+        const itemDetails = await findOneElement(this.getDb(), COLLECTIONS.SHOP_PRODUCT, {
+          id: +item.id
+        });
+        // Comprobar si lo que vamos a decrementar es más de lo que tenemos en el stock
+        if (item.increment < 0 && (item.increment + itemDetails.stock) < 0) {
+          item.increment = -itemDetails.stock;
+        }
         await manageStockUpdate(
           this.getDb(),
           COLLECTIONS.SHOP_PRODUCT,
           {id: +item.id},
           {stock: item.increment}
         );
-        const itemDetails = await findOneElement(this.getDb(), COLLECTIONS.SHOP_PRODUCT, {
-          id: +item.id
-        });
-        console.log(itemDetails);
-        pubsub.publish('STOCK', { updateStockProduct: itemDetails});
+        itemDetails.stock += item.increment;
+        pubsub.publish(SUBSCRIPTIONS.PRODUCT_STOCK_UPDATE, { updateStockSelectProduct: itemDetails});
       });
       return true;
     } catch (e) {

@@ -1,7 +1,7 @@
 import GMR from 'graphql-merge-resolvers';
-import resolversShopProductsSubscription from './shop-product';
+import resolverShopProductSubscription from './shop-product';
 const subscriptionResolvers = GMR.merge([
-    resolversShopProductsSubscription
+    resolverShopProductSubscription
 ]);
 
 export default subscriptionResolvers;
