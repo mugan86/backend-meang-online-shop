@@ -4,7 +4,7 @@ import cors from 'cors';
 import compression from 'compression';
 import { createServer } from 'http';
 import environments from './config/environments';
-import { ApolloServer } from 'apollo-server-express';
+import { ApolloServer, PubSub } from 'apollo-server-express';
 import schema from './schema';
 import expressPlayground from 'graphql-playground-middleware-express';
 import Database from './lib/database';
@@ -17,7 +17,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 async function init() {
   const app = express();
-
+  const pubsub = new PubSub();
   app.use('*', cors());
 
   app.use(compression());
@@ -28,7 +28,7 @@ async function init() {
 
   const context = async ({ req, connection }: IContext) => {
     const token = req ? req.headers.authorization : connection.authorization;
-    return { db, token };
+    return { db, token, pubsub };
   };
 
   const server = new ApolloServer({
@@ -47,6 +47,7 @@ async function init() {
   );
 
   const httpServer = createServer(app);
+  server.installSubscriptionHandlers(httpServer);
   const PORT = process.env.PORT || 2002;
   httpServer.listen(
     {
@@ -56,7 +57,8 @@ async function init() {
       console.log('==================SERVER API GRAPHQL====================');
       console.log(`STATUS: ${chalk.greenBright('ONLINE')}`);
       console.log(`MESSAGE: ${chalk.greenBright('API MEANG - Online Shop CONNECT!!')}`);
-      console.log(`URL: http://localhost:${PORT} `);
+      console.log(`GraphQL Server => @: http://localhost:${PORT}/graphql `);
+      console.log(`WS Connection => @: ws://localhost:${PORT}/graphql `);
     }
   );
 }
