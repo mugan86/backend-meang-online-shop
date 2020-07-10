@@ -93,7 +93,7 @@ class ShopProductsService extends ResolversOperationsService {
         );
         itemDetails.stock += item.increment; 
         pubsub.publish(SUBSCRIPTIONS_EVENT.UPDATE_STOCK_PRODUCT, 
-          { updateStockProduct: itemDetails});
+          { selectProductStockUpdate: itemDetails});
       });
       return true;
     } catch (e) {
