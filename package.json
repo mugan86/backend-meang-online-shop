@@ -17,9 +17,10 @@
     "meang",
     "api-graphql",
     "stripe",
-    "cloudinary",
+    "vercel",
     "netlify",
-    "zeitnow"
+    "zeitnow",
+    "admin-sidebar"
   ],
   "author": "Anartz Mugika Ledo <mugan86@gmail.com> (anartz-mugika.com)",
   "license": "MIT",
