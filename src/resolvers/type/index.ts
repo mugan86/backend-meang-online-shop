@@ -1,4 +1,4 @@
-import GMR from 'graphql-merge-resolvers';
+const GMR = require('@wiicamp/graphql-merge-resolvers');
 import resolversShopProductType from './shop-product';
 import resolversPlatformType from './platform';
 import resolversProductType from './product';

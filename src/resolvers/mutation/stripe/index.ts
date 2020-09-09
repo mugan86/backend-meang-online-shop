@@ -1,4 +1,4 @@
-import GMR from 'graphql-merge-resolvers';
+const GMR = require('@wiicamp/graphql-merge-resolvers');
 import resolversStripeCustomerMutation from './customer';
 import resolversStripeCardMutation from './card';
 import resolversStripeChargeMutation from './charge';

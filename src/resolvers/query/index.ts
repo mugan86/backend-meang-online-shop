@@ -1,4 +1,4 @@
-import GMR from 'graphql-merge-resolvers';
+const GMR = require('@wiicamp/graphql-merge-resolvers');
 import resolversUserQuery from './user';
 import resolversShopProductsQuery from './shop-product';
 import resolversGenreQuery from './genre';

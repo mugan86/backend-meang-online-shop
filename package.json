@@ -33,6 +33,7 @@
     "npm": ">=6.0.0"
   },
   "dependencies": {
+    "@wiicamp/graphql-merge-resolvers": "^2.1.2",
     "apollo-server-express": "^2.11.0",
     "bcrypt": "^4.0.1",
     "chalk": "^4.0.0",
@@ -42,7 +43,6 @@
     "express": "^4.17.1",
     "graphql": "^15.0.0",
     "graphql-import-node": "0.0.4",
-    "graphql-merge-resolvers": "^1.1.16",
     "graphql-playground-middleware-express": "^1.7.12",
     "graphql-tools": "^4.0.7",
     "jsonwebtoken": "^8.5.1",

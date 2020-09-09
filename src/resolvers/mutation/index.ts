@@ -1,4 +1,4 @@
-import GMR from 'graphql-merge-resolvers';
+const GMR = require('@wiicamp/graphql-merge-resolvers');
 import resolversUserMutation from './user';
 import resolversGenreMutation from './genre';
 import resolversTagMutation from './tag';
