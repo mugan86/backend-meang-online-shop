@@ -49,7 +49,7 @@
     "merge-graphql-schemas": "^1.7.7",
     "mongodb": "^3.5.5",
     "ncp": "^2.0.0",
-    "nodemailer": "^6.4.6",
+    "nodemailer": "^6.4.16",
     "slugify": "^1.4.0",
     "stripe": "^8.64.0",
     "subscriptions-transport-ws": "^0.9.16",
