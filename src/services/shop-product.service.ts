@@ -16,19 +16,21 @@ class ShopProductsService extends ResolversOperationsService {
     random: boolean = false,
     otherFilters: object = {}
   ) {
+    console.log(active);
     let filter: object = { active: { $ne: false } };
     if (active === ACTIVE_VALUES_FILTER.ALL) {
-      filter = {};
+      filter = { };
     } else if (active === ACTIVE_VALUES_FILTER.INACTIVE) {
       filter = { active: false };
     }
     if (platform[0] !== '-1' && platform !== undefined) {
       filter = {...filter, ...{platform_id: {$in: platform}}};
     }
-
+    console.log(filter);
     if (otherFilters !== {} && otherFilters !== undefined) {
       filter = {...filter, ...otherFilters};
     }
+    console.log(filter);
     const page = this.getVariables().pagination?.page;
     const itemsPage = this.getVariables().pagination?.itemsPage;
     if(!random) {
@@ -46,6 +48,7 @@ class ShopProductsService extends ResolversOperationsService {
         shopProducts: result.items,
       };
     }
+    console.log('Filter', filter);
     const result: Array<object> = await randomItems(
       this.getDb(),
       this.collection,
@@ -82,8 +85,8 @@ class ShopProductsService extends ResolversOperationsService {
           this.getDb(), COLLECTIONS.SHOP_PRODUCT,
           { id: +item.id}
         );
-        if(item.increment < 0 && ((item.increment + itemDetails.stock) < 0)) {
-          item.increment = -itemDetails.stock;
+        if(item.increment < 0 && ((item.increment + itemDetails!.stock) < 0)) {
+          item.increment = -itemDetails!.stock;
         }
         await manageStockUpdate(
           this.getDb(),
@@ -91,9 +94,9 @@ class ShopProductsService extends ResolversOperationsService {
           {id: +item.id},
           {stock: item.increment}
         );
-        itemDetails.stock += item.increment; 
+        itemDetails!.stock += item.increment; 
         pubsub.publish(SUBSCRIPTIONS_EVENT.UPDATE_STOCK_PRODUCT, 
-          { selectProductStockUpdate: itemDetails});
+          { updateStockProduct: itemDetails});
       });
       return true;
     } catch (e) {

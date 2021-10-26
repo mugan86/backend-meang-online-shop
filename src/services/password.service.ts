@@ -21,6 +21,7 @@ class PasswordService extends ResolversOperationsService {
     const user = await findOneElement(this.getDb(), COLLECTIONS.USERS, {
       email,
     });
+    console.log(user);
     // Si usuario es indefinido mandamos un mensaje que no existe el usuario
     if (user === undefined || user === null) {
       return {
@@ -39,6 +40,7 @@ class PasswordService extends ResolversOperationsService {
       subject: 'Petición para cambiar de contraseña',
       html,
     };
+    console.log(token);
     return new MailService().send(mail);
   }
 

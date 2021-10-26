@@ -1,3 +1,4 @@
+import { IUser } from './../interfaces/user.interface';
 import { ACTIVE_VALUES_FILTER } from './../config/constants';
 import { findOneElement, asignDocumentId } from './../lib/db-operations';
 import { COLLECTIONS, EXPIRETIME, MESSAGES } from '../config/constants';
@@ -50,9 +51,9 @@ class UsersService extends ResolversOperationsService {
   async login() {
     try {
       const variables = this.getVariables().user;
-      const user = await findOneElement(this.getDb(), this.collection, {
+      const user: IUser = await findOneElement(this.getDb(), this.collection, {
         email: variables?.email,
-      });
+      }) as IUser;
       if (user === null) {
         return {
           status: false,
@@ -61,8 +62,8 @@ class UsersService extends ResolversOperationsService {
         };
       }
       const passwordCheck = bcrypt.compareSync(
-        variables?.password,
-        user.password
+        variables?.password || '',
+        user.password || ''
       );
 
       if (passwordCheck !== null) {

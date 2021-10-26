@@ -1,5 +1,5 @@
 import { IContext } from './interfaces/context.interface';
-import express from 'express';
+import express, { Application } from 'express';
 import cors from 'cors';
 import compression from 'compression';
 import { createServer } from 'http';
@@ -16,9 +16,9 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 async function init() {
-  const app = express();
+  const app: Application = express();
   const pubsub = new PubSub();
-  app.use('*', cors());
+  app.use(cors());
 
   app.use(compression());
 

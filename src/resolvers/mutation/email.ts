@@ -1,11 +1,10 @@
-import { findOneElement, updateOneElement } from './../../lib/db-operations';
-import { EXPIRETIME, MESSAGES, COLLECTIONS } from './../../config/constants';
+import { MESSAGES } from './../../config/constants';
 import { IResolvers } from 'graphql-tools';
 import JWT from '../../lib/jwt';
 import UsersService from '../../services/users.service';
-import bcrypt from 'bcrypt';
 import MailService from '../../services/mail.service';
 import PasswordService from '../../services/password.service';
+import { IUser } from '../../interfaces/user.interface';
 const resolversMailMutation: IResolvers = {
   Mutation: {
     async sendEmail(_, { mail }) {
@@ -45,7 +44,7 @@ function verifyToken(token: string, id: string) {
     };
   }
   // Si el token es valido , asignamos la información al usuario
-  const user = Object.values(checkToken)[0];
+  const user: IUser = (Object.values(checkToken)[0]) as IUser;
   if (user.id !== id) {
     return {
       status: false,

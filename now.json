@@ -1,0 +1,20 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "build/server.js",
+            "use": "@now/node",
+            "config": {
+                "includeFiles": [
+                    "build/schema/**/*.graphql"
+                ]
+            }
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "build/server.js"
+        }
+    ]
+}

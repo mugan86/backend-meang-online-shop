@@ -95,7 +95,8 @@ class ResolversOperationsService {
   protected async add(collection: string, document: object, item: string) {
     try {
       return await insertOneElement(this.getDb(), collection, document).then(
-        (res) => {
+        // tslint:disable-next-line:no-any
+        (res: any) => {
           if (res.result.ok === 1) {
             return {
               status: true,
@@ -131,7 +132,9 @@ class ResolversOperationsService {
         collection,
         filter,
         objectUpdate
-      ).then((res) => {
+      // tslint:disable-next-line:no-any
+      ).then((res: any) => {
+        
         if (res.result.nModified === 1 && res.result.ok) {
           return {
             status: true,

@@ -6,6 +6,7 @@ const resolversUserMutation: IResolvers = {
       return new UsersService(_, { user }, context).register();
     },
     updateUser(_, { user }, context) {
+      console.log('Modify', user);
       return new UsersService(_, { user }, context).modify();
     },
     deleteUser(_, { id }, context) {

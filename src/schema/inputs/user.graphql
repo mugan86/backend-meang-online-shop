@@ -1,7 +1,7 @@
 "Input para añadir los datos del usuario en el registro"
 input UserInput {
     "Identificador en este caso no obligatorio"
-    id: ID
+    id: Int
     "Nombre de pila"
     name: String!
     "Apellido/s"

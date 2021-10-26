@@ -1,4 +1,4 @@
 type Subscription {
-    updateStockProduct: ShopProduct
-    selectProductStockUpdate(id: Int!): ShopProduct
+  updateStockProduct: ShopProduct
+  selectProductStockUpdate(id: Int!): ShopProduct
 }
