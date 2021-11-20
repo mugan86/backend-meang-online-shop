@@ -9,7 +9,7 @@ describe('Test Schema GraphQL - Query - user.graphql', () => {
   before(function () {
     tester = new EasyGraphQLTester(apiSchema);
   });
-  it("Llamada 'users' válida", () => {
+  it("'users' válida - Sin usar Query Variables", () => {
     const query = `
     {
       users {
@@ -38,7 +38,65 @@ describe('Test Schema GraphQL - Query - user.graphql', () => {
           `;
     tester.test(true, query, {});
   });
-  it("Llamada 'users' inválida", () => {
+  it("'users' válida - Usando Query Variables - Paginación - Página", () => {
+    const query = `
+    query usersLis($page: Int){
+      users(page: $page) {
+        info {
+          page
+          total
+          itemsPage
+          pages
+        }
+        status
+        message
+        users {
+          id
+          name
+          lastname
+          email
+          password
+          registerDate
+          birthday
+          role
+          active
+          stripeCustomer
+        }
+      }
+    }
+          `;
+    tester.test(true, query, { page: 5});
+  });
+  it("'users' válida - Usando Query Variables - Paginación - Página, Items Página, Activo", () => {
+    const query = `
+    query usersList($page: Int, $itemsPage: Int, $active: ActiveFilterEnum){
+      users(page: $page, itemsPage: $itemsPage, active: $active) {
+        info {
+          page
+          total
+          itemsPage
+          pages
+        }
+        status
+        message
+        users {
+          id
+          name
+          lastname
+          email
+          password
+          registerDate
+          birthday
+          role
+          active
+          stripeCustomer
+        }
+      }
+    }
+          `;
+    tester.test(true, query, {page: 2, active: 'ALL', itemsPage: 4});
+  });
+  it("'users' inválida", () => {
     const query = `
     {
       users {
@@ -57,7 +115,36 @@ describe('Test Schema GraphQL - Query - user.graphql', () => {
           `;
     tester.test(false, query, {});
   });
-  it("Llamada 'login' válida", () => {
+  it("'users' inválida - Usando Query Variables - Pasando argumento active incorrecto", () => {
+    const query = `
+    query usersList($page: Int, $itemsPage: Int, $active: ActiveFilterEnum){
+      users(page: $page, itemsPage: $itemsPage, active: $active) {
+        info {
+          page
+          total
+          itemsPage
+          pages
+        }
+        status
+        message
+        users {
+          id
+          name
+          lastname
+          email
+          password
+          registerDate
+          birthday
+          role
+          active
+          stripeCustomer
+        }
+      }
+    }
+          `;
+    tester.test(false, query, {page: 2, active: 'ALLLL', itemsPage: 4});
+  });
+  it("'login' válida", () => {
     const query = `
     query loginQuery($email:String!, $password: String!){
       login  (email:$email, password: $password){
@@ -69,7 +156,7 @@ describe('Test Schema GraphQL - Query - user.graphql', () => {
           `;
     tester.test(true, query, { email: 'mugan86@gmail.com', password: '1234' });
   });
-  it("Llamada 'login' inválida - Sin Password en Query Variables", () => {
+  it("'login' inválida - Sin Password en Query Variables", () => {
     const query = `
     query loginQuery($email:String!, $password: String!){
       login  (email:$email, password: $password){
@@ -81,7 +168,7 @@ describe('Test Schema GraphQL - Query - user.graphql', () => {
           `;
     tester.test(false, query, { email: 'mugan86@gmail.com' });
   });
-  it("Llamada 'login' inválida - Sin Email, Password en Query Variables", () => {
+  it("'login' inválida - Sin Email, Password en Query Variables", () => {
     const query = `
     query loginQuery($email:String!, $password: String!){
       login  (email:$email, password: $password){
@@ -93,7 +180,7 @@ describe('Test Schema GraphQL - Query - user.graphql', () => {
           `;
     tester.test(false, query, {});
   });
-  it("Llamada 'login' inválida - Sin Email, Password en Argumentos de la operación", () => {
+  it("'login' inválida - Sin Email, Password en Argumentos de la operación", () => {
     const query = `
     {
       login {
@@ -105,7 +192,7 @@ describe('Test Schema GraphQL - Query - user.graphql', () => {
           `;
     tester.test(false, query, {email: 'mugan86@gmail.com', password: '1234'});
   });
-  it("Llamada 'me' válida", () => {
+  it("'me' válida", () => {
     const query = `
     {
       me {
@@ -121,7 +208,7 @@ describe('Test Schema GraphQL - Query - user.graphql', () => {
     tester.test(true, query, {});
   });
 
-  it("Llamada 'me' inválida - Añadiendo 'token' en vez de 'user'", () => {
+  it("'me' inválida - Añadiendo 'token' en vez de 'user'", () => {
     const query = `
     {
       me {
