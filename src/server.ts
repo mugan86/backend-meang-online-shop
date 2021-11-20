@@ -10,7 +10,6 @@ import environments from './config/environments';
 import { IContext } from './interfaces/context.interface';
 
 class GraphQLServer {
-  // Propiedades
   private app!: Application;
   private httpServer!: Server;
   private readonly DEFAULT_PORT = (process.env.PORT) ? +process.env.PORT: 3025;

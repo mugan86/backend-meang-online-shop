@@ -2,7 +2,7 @@
     "version": 2,
     "builds": [
         {
-            "src": "build/server.js",
+            "src": "build/app.js",
             "use": "@now/node",
             "config": {
                 "includeFiles": [
@@ -14,7 +14,7 @@
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "build/server.js"
+            "dest": "build/app.js"
         }
     ]
 }
