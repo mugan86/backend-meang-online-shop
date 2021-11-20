@@ -9,7 +9,8 @@
     "dev": "nodemon \"src/app.ts\" --exec \"ts-node\" \"src/app.ts\" -e ts,graphql,json",
     "argument": "echo \"The value of --foo is '${npm_config_foo}'\"",
     "lint": "npx eslint . --ext .ts",
-    "lint.fix": "npx eslint . --ext .ts --fix"
+    "lint.fix": "npx eslint . --ext .ts --fix",
+    "test": "npm run build && npx jest"
   },
   "repository": {
     "type": "git",
