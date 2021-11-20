@@ -1,0 +1,14 @@
+{
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint"],
+    "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+    "rules": {
+      "quotes": ["error", "single"],
+      "semi": ["error", "always"],
+      "@typescript-eslint/no-explicit-any": ["error", {
+          "fixToUnknown": true
+      }],
+      "curly": "error"
+    }
+  }

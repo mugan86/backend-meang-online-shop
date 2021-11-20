@@ -107,7 +107,7 @@ class StripeCustomerService extends StripeApi {
             status: result.deleted && resultOperation ? true : false,
             message: result.deleted && resultOperation ? 
                       `Usuario ${id} borrado correctamente` : 
-                      `Usuario no se ha borrado correctamente en la base de datos nuestra`,
+                      'Usuario no se ha borrado correctamente en la base de datos nuestra',
           };
         }
         return {

@@ -7,6 +7,7 @@ import { createServer, Server } from 'http';
 import { SubscriptionServer } from 'subscriptions-transport-ws';
 import Database from './lib/database';
 import environments from './config/environments';
+import { IContext } from './interfaces/context.interface';
 
 class GraphQLServer {
   // Propiedades
@@ -52,13 +53,15 @@ class GraphQLServer {
 
   private async configApolloServerExpress() {
     const db = await this.database.init();
+   
     const apolloServer = new ApolloServer({
       schema: this.schema,
       introspection: true,
-      context: async () => {
+      context: async ({req, connection}: IContext) => {
         return {
           db,
           pubsub: this.pubsub,
+          token : req ? req.headers.authorization : connection.authorization
         };
       },
     });

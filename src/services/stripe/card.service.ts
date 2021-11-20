@@ -95,7 +95,7 @@ class StripeCardService extends StripeApi {
     })
     .catch((error: Error) =>  this.getError(error));
   }
-  async list(customer: string, limit: number = 5, startingAfter: string = '', endingBefore: string = '') {
+  async list(customer: string, limit = 5, startingAfter = '', endingBefore = '') {
     const pagination = this.getPagination(startingAfter, endingBefore);
       return await this.execute(
         STRIPE_OBJECTS.CUSTOMERS,
@@ -105,7 +105,7 @@ class StripeCardService extends StripeApi {
       ).then((result: {has_more: boolean, data: Array<IStripeCard>}) => {
         return {
           status: true,
-          message: `Lista de tarjetas mostrado correctamente`,
+          message: 'Lista de tarjetas mostrado correctamente',
           cards: result.data,
           hasMore: result.has_more
         };

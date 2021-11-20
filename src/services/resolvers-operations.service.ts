@@ -31,8 +31,8 @@ class ResolversOperationsService {
   protected async list(
     collection: string,
     listElement: string,
-    page: number = 1,
-    itemsPage: number = 20,
+    page = 1,
+    itemsPage = 20,
     filter: object = { active: { $ne: false}}
   ) {
     try {
@@ -96,7 +96,7 @@ class ResolversOperationsService {
     try {
       return await insertOneElement(this.getDb(), collection, document).then(
         // tslint:disable-next-line:no-any
-        (res: any) => {
+        (res: {result: { ok: number}}) => {
           if (res.result.ok === 1) {
             return {
               status: true,
@@ -133,7 +133,7 @@ class ResolversOperationsService {
         filter,
         objectUpdate
       // tslint:disable-next-line:no-any
-      ).then((res: any) => {
+      ).then((res: {result: { nModified: number, ok: number}}) => {
         
         if (res.result.nModified === 1 && res.result.ok) {
           return {

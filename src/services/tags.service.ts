@@ -91,7 +91,7 @@ class TagsService extends ResolversOperationsService {
         return { status: result.status, message: result.message };
     }
 
-    async unblock(unblock: boolean = false) {
+    async unblock(unblock = false) {
         const id = this.getVariables().id;
         if (!this.checkData(String(id) || '')) {
             return {

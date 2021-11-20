@@ -13,7 +13,7 @@ class ShopProductsService extends ResolversOperationsService {
   async items(
     active: string = ACTIVE_VALUES_FILTER.ACTIVE,
     platform: Array<string> = ['-1'],
-    random: boolean = false,
+    random = false,
     otherFilters: object = {}
   ) {
     console.log(active);

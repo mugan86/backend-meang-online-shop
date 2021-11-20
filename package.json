@@ -7,7 +7,9 @@
     "start": "node build/server.js",
     "build": "tsc -p . && ncp src/schema build/schema",
     "dev": "nodemon \"src/app.ts\" --exec \"ts-node\" \"src/app.ts\" -e ts,graphql,json",
-    "argument": "echo \"The value of --foo is '${npm_config_foo}'\""
+    "argument": "echo \"The value of --foo is '${npm_config_foo}'\"",
+    "lint": "npx eslint . --ext .ts",
+    "lint.fix": "npx eslint . --ext .ts --fix"
   },
   "repository": {
     "type": "git",
@@ -67,8 +69,10 @@
     "@types/mongodb": "^3.6.6",
     "@types/node": "^14.14.25",
     "@types/nodemailer": "^6.4.0",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "eslint": "^8.2.0",
     "nodemon": "^2.0.2",
-    "ts-node": "^9.1.1",
-    "typescript-tslint-plugin": "^1.0.1"
+    "ts-node": "^9.1.1"
   }
 }

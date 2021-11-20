@@ -33,7 +33,7 @@ class UsersService extends ResolversOperationsService {
   }
   // Autenticarnos
   async auth() {
-    let info = new JWT().verify(this.getContext().token!);
+    const info = new JWT().verify(this.getContext().token!);
     if (info === MESSAGES.TOKEN_VERICATION_FAILED) {
       return {
         status: false,

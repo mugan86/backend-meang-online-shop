@@ -99,7 +99,7 @@ export const randomItems = async(
   database: Db,
   collection: string,
   filter: object = {},
-  items: number = 10
+  items = 10
 ): Promise<Array<object>> => {
   return new Promise(async(resolve) => {
     const pipeline = [
