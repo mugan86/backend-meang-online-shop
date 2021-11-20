@@ -1,4 +1,3 @@
-import { STRIPE_ACTIONS } from './../../../lib/stripe-api';
 import { IResolvers } from 'graphql-tools';
 import StripeCardService from '../../../services/stripe/card.service';
 

@@ -35,6 +35,11 @@
     "node": "14.17.0",
     "npm": "7.20.3"
   },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "mocks"
+    ]
+  },
   "dependencies": {
     "@wiicamp/graphql-merge-resolvers": "^2.1.2",
     "apollo-server-express": "^2.25.2",
@@ -71,7 +76,9 @@
     "@types/nodemailer": "^6.4.0",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
+    "easygraphql-tester": "^6.0.1",
     "eslint": "^8.2.0",
+    "jest": "^27.3.1",
     "nodemon": "^2.0.2",
     "ts-node": "^9.1.1"
   }
