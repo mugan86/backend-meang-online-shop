@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node build/server.js",
     "build": "tsc -p . && ncp src/schema build/schema",
-    "dev": "nodemon \"src/server.ts\" --exec \"ts-node\" \"src/server.ts\" -e ts,graphql,json",
+    "dev": "nodemon \"src/app.ts\" --exec \"ts-node\" \"src/app.ts\" -e ts,graphql,json",
     "argument": "echo \"The value of --foo is '${npm_config_foo}'\""
   },
   "repository": {
@@ -30,7 +30,8 @@
   },
   "homepage": "https://github.com/mugan86/backend-meang-online-shop#readme",
   "engines": {
-    "node": "14.17.0", "npm": "7.20.3"
+    "node": "14.17.0",
+    "npm": "7.20.3"
   },
   "dependencies": {
     "@wiicamp/graphql-merge-resolvers": "^2.1.2",
@@ -44,6 +45,7 @@
     "graphql": "^15.5.1",
     "graphql-import-node": "0.0.4",
     "graphql-playground-middleware-express": "^1.7.12",
+    "graphql-subscriptions": "^2.0.0",
     "graphql-tools": "^6.2.6",
     "jsonwebtoken": "^8.5.1",
     "merge-graphql-schemas": "^1.7.7",
