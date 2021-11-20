@@ -1,13 +1,13 @@
-import { IResolvers } from 'graphql-tools';
-import query from './query';
-import mutation from './mutation';
-import type from './type';
-import subscription from './subscription';
-const resolvers: IResolvers = {
-  ...query,
-  ...mutation,
-  ...type,
-  ...subscription
-};
+import path from "path";
+import { mergeResolvers } from "@graphql-tools/merge";
+import { loadFilesSync } from "@graphql-tools/load-files";
 
-export default resolvers;
+const resolversArray = loadFilesSync(path.join(__dirname), {
+  extensions: ["ts", "js"],
+});
+
+if (process.env.NODE_ENV !== 'production') {
+  console.log(resolversArray);
+}
+
+export default mergeResolvers(resolversArray);
