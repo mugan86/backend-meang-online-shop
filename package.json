@@ -1,10 +1,10 @@
 {
   "name": "backend-meang",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "Proyecto Backend API GraphQL Tienda Online - MEAN+G",
-  "main": "build/server.js",
+  "main": "build/app.js",
   "scripts": {
-    "start": "node build/server.js",
+    "start": "node build/app.js",
     "build": "tsc -p . && ncp src/schema build/schema",
     "dev": "nodemon \"src/app.ts\" --exec \"ts-node\" \"src/app.ts\" -e ts,graphql,json",
     "argument": "echo \"The value of --foo is '${npm_config_foo}'\"",
