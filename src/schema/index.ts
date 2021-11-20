@@ -4,13 +4,7 @@ import resolvers from './../resolvers';
 import { makeExecutableSchema } from 'graphql-tools';
 import { GraphQLSchema } from 'graphql';
 
-// COnfiguración mezcla de schemas
-import path from 'path';
-import { fileLoader, mergeTypes } from 'merge-graphql-schemas';
-
-const typesArray = fileLoader(path.join(`${__dirname}/**/*.graphql`));
-
-const typeDefs = mergeTypes(typesArray, { all: true });
+import typeDefs from './load-type-defs';
 
 const schema: GraphQLSchema = makeExecutableSchema({
   typeDefs,
