@@ -1,2 +1,3 @@
 # backend-meang-online-shop
 Backend del proyecto de la tienda Online desarrollado con Node Typescript y GraphQL
+[![Build Status](https://app.travis-ci.com/mugan86/backend-meang-online-shop.svg?branch=master)](https://app.travis-ci.com/mugan86/backend-meang-online-shop) [![GitHub version](https://badge.fury.io/gh/mugan86%2Fbackend-meang-online-shop.svg)](https://badge.fury.io/gh/mugan86%2Fbackend-meang-online-shop)
