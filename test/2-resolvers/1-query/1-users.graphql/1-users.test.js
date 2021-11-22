@@ -10,7 +10,7 @@ describe('Test Resolvers - Query - user', () => {
   before(function () {
     tester = new EasyGraphQLTester(apiSchema, resolvers);
   });
-  it("'users' válida - Sin usar Query Variables", async () => {
+  it("'users'", async () => {
     const query = `
     {
       users {
@@ -63,8 +63,6 @@ describe('Test Resolvers - Query - user', () => {
         }
       }
     });
-  
-
   });
   
 });
