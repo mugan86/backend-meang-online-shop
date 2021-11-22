@@ -8,7 +8,7 @@ import { SubscriptionServer } from 'subscriptions-transport-ws';
 import Database from './lib/database';
 import environments from './config/environments';
 import { IContext } from './interfaces/context.interface';
-
+import expressPlayGround from "graphql-playground-middleware-express";
 class GraphQLServer {
   private app!: Application;
   private httpServer!: Server;
@@ -68,6 +68,13 @@ class GraphQLServer {
     await apolloServer.start();
 
     apolloServer.applyMiddleware({ app: this.app, cors: true });
+
+    this.app.use(
+      "/",
+      expressPlayGround({
+        endpoint: "/graphql",
+      })
+    );
 
     // NUEVA MANERA DE IMPLEMENTAR LA CREACIÓN DE LA IMPLEMENTACIÓN
     // PARA OBTENER INFORMACIÓN DE ACTUALIZACIONES
