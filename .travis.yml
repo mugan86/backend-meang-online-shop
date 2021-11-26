@@ -1,7 +1,13 @@
 language: node_js
 node_js:
-  - "stable"
+  - "14"
 install:
   - npm install
 script:
+  - npm run build
   - npm test
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: "$HEROKU"

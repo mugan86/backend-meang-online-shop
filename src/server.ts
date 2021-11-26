@@ -8,7 +8,7 @@ import { SubscriptionServer } from 'subscriptions-transport-ws';
 import Database from './lib/database';
 import environments from './config/environments';
 import { IContext } from './interfaces/context.interface';
-import expressPlayGround from "graphql-playground-middleware-express";
+import expressPlayGround from 'graphql-playground-middleware-express';
 class GraphQLServer {
   private app!: Application;
   private httpServer!: Server;
@@ -70,9 +70,9 @@ class GraphQLServer {
     apolloServer.applyMiddleware({ app: this.app, cors: true });
 
     this.app.use(
-      "/",
+      '/',
       expressPlayGround({
-        endpoint: "/graphql",
+        endpoint: '/graphql',
       })
     );
 

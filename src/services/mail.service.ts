@@ -9,7 +9,7 @@ class MailService {
                 to: mail.to, // list of receivers
                 subject: mail.subject, // Subject line
                 html: mail.html, // html body
-              }, (error, _) => {
+              }, (error) => {
                   (error) ? reject({
                       status: false,
                       message: error
