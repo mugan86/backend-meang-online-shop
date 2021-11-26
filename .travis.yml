@@ -12,3 +12,5 @@ deploy:
   provider: heroku
   api_key:
     secure: "$HEROKU"
+  on:
+    all_branches: true
