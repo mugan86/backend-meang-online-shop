@@ -10,7 +10,6 @@ script:
 # Configuración para CD en Heroku
 deploy:
   provider: heroku
-  api_key:
-    secure: $HEROKU
+  api_key: $HEROKU
   on:
     all_branches: true
