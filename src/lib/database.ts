@@ -1,24 +1,25 @@
-import MongoClient from 'mongodb';
-import chalk from 'chalk';
+import { Db, MongoClient } from "mongodb";
+import chalk from "chalk";
 class Database {
-  async init() {
-    const MONGO_DB =
-      process.env.DATABASE || 'mongodb://localhost:27017/meang-online-shop';
-    const client = await MongoClient.connect(MONGO_DB, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    db?: Db;
 
-    const db = client.db();
+    async init(): Promise<Db | undefined> {
+        console.log("================DATABASE================");
+        try {
+            const MONGODB = process.env.DATABASE || "mongodb://localhost:27017/jwt-login-register-21";
+            const mongoClient = await MongoClient.connect(MONGODB);
 
-    if (client.isConnected()) {
-      console.log('==================DATABASE====================');
-      console.log(`STATUS: ${chalk.greenBright('ONLINE')}`);
-      console.log(`DATABASE: ${chalk.greenBright(db.databaseName)}`);
+            this.db = mongoClient.db();
+            // Mensaje visual con el estado
+            console.log(`STATUS: ${chalk.greenBright("ONLINE")}`);
+            console.log(`DATABASE: ${chalk.greenBright(this.db.databaseName)}`);
+        } catch(error) {
+            console.log(`ERROR: ${error}`);
+            console.log(`STATUS: ${chalk.redBright("OFFLINE")}`);
+            console.log(`DATABASE: ${chalk.redBright(this.db?.databaseName)}`);
+        }
+        return this.db;
     }
-
-    return db;
-  }
 }
 
 export default Database;

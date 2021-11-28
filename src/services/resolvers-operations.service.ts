@@ -96,7 +96,7 @@ class ResolversOperationsService {
     try {
       return await insertOneElement(this.getDb(), collection, document).then(
         // tslint:disable-next-line:no-any
-        (res: {result: { ok: number}}) => {
+        (res: any) => {
           if (res.result.ok === 1) {
             return {
               status: true,
@@ -133,7 +133,7 @@ class ResolversOperationsService {
         filter,
         objectUpdate
       // tslint:disable-next-line:no-any
-      ).then((res: {result: { nModified: number, ok: number}}) => {
+      ).then((res: any) => {
         
         if (res.result.nModified === 1 && res.result.ok) {
           return {

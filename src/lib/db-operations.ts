@@ -1,4 +1,4 @@
-import { Db } from 'mongodb';
+import { Db, SortDirection } from 'mongodb';
 import { IPaginationOptions } from '../interfaces/pagination-options.interface';
 
 /**
@@ -10,13 +10,13 @@ import { IPaginationOptions } from '../interfaces/pagination-options.interface';
 export const asignDocumentId = async (
   database: Db,
   collection: string,
-  sort: object = { registerDate: -1 }
+  sort: { key: string, order: SortDirection } = {key: 'registerDate', order: 1}
 ) => {
   const lastElement = await database
     .collection(collection)
     .find()
+    .sort(sort.key, sort.order as SortDirection)
     .limit(1)
-    .sort(sort)
     .toArray();
   if (lastElement.length === 0) {
     return '1';

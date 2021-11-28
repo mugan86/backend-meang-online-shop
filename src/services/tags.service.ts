@@ -45,7 +45,9 @@ class TagsService extends ResolversOperationsService {
         }
         // Si valida las opciones anteriores, venir aquí y crear el documento
         const tagObject = {
-            id: await asignDocumentId(this.getDb(), this.collection, { _id: -1}),
+            id: await asignDocumentId(this.getDb(), this.collection, {
+                key: '_id', order : -1,
+              }),
             name: tag,
             slug: slugify(tag || '', { lower: true })
         };

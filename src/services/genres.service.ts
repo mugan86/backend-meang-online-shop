@@ -45,7 +45,9 @@ class GenresService extends ResolversOperationsService {
         }
         // Si valida las opciones anteriores, venir aquí y crear el documento
         const genreObject = {
-            id: await asignDocumentId(this.getDb(), this.collection, { _id: -1}),
+            id: await asignDocumentId(this.getDb(), this.collection, {
+                key: '_id', order : -1,
+              }),
             name: genre,
             slug: slugify(genre || '', { lower: true })
         };

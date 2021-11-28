@@ -53,7 +53,7 @@ class UsersService extends ResolversOperationsService {
       const variables = this.getVariables().user;
       const user: IUser = await findOneElement(this.getDb(), this.collection, {
         email: variables?.email,
-      }) as IUser;
+      }) as unknown as IUser;
       if (user === null) {
         return {
           status: false,
@@ -127,7 +127,7 @@ class UsersService extends ResolversOperationsService {
 
     // COmprobar el último usuario registrado para asignar ID
     user!.id = await asignDocumentId(this.getDb(), this.collection, {
-      registerDate: -1,
+      key: 'registerDate', order : -1,
     });
     // Asignar la fecha en formato ISO en la propiedad registerDate
     user!.registerDate = new Date().toISOString();
