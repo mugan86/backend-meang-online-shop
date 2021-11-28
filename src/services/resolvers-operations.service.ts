@@ -7,7 +7,7 @@ import {
   updateOneElement,
   deleteOneElement,
 } from './../lib/db-operations';
-import { Db } from 'mongodb';
+import { Db, DeleteResult, InsertOneResult, UpdateResult } from 'mongodb';
 import { pagination } from '../lib/pagination';
 
 class ResolversOperationsService {
@@ -96,8 +96,8 @@ class ResolversOperationsService {
     try {
       return await insertOneElement(this.getDb(), collection, document).then(
         // tslint:disable-next-line:no-any
-        (res: any) => {
-          if (res.result.ok === 1) {
+        (res: InsertOneResult) => {
+          if (res.insertedId) {
             return {
               status: true,
               message: `Añadido correctamente el ${item}.`,
@@ -133,9 +133,9 @@ class ResolversOperationsService {
         filter,
         objectUpdate
       // tslint:disable-next-line:no-any
-      ).then((res: any) => {
+      ).then((res: UpdateResult) => {
         
-        if (res.result.nModified === 1 && res.result.ok) {
+        if (res.modifiedCount === 1) {
           return {
             status: true,
             message: `Elemento del ${item} actualizado correctamente.`,
@@ -160,7 +160,7 @@ class ResolversOperationsService {
   protected async del(collection: string, filter: object, item: string) {
     try {
       return await deleteOneElement(this.getDb(), collection, filter).then(
-        (res) => {
+        (res: DeleteResult) => {
           if (res.deletedCount === 1) {
             return {
               status: true,
