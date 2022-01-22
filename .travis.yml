@@ -9,6 +9,8 @@ script:
 
 # Configuración para CD en Heroku
 deploy:
+  script:
+    - gem install faraday -v 1.9.3
   provider: heroku
   api_key:
     api-2021: $HEROKU
