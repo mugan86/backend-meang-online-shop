@@ -101,12 +101,12 @@ export const randomItems = async(
   filter: object = {},
   items = 10
 ): Promise<Array<object>> => {
-  return new Promise(async(resolve) => {
+  return new Promise((resolve) => {
     const pipeline = [
       { $match: filter },
       { $sample: { size: items}}
     ];
-    resolve(await database.collection(collection).aggregate(
+    resolve(database.collection(collection).aggregate(
       pipeline
     ).toArray());
   });

@@ -11,7 +11,7 @@
     "lint": "npx eslint . --ext .ts",
     "lint.fix": "npx eslint . --ext .ts --fix",
     "test": "npx mocha 'test/**/*.js'",
-    "vercel.prod": "npm run build && npx vercel --prod"
+    "check": "npx nodemon \"src/app.ts\" --exec \"npx ts-node\" \"src/app.ts\" -e ts,graphql,json"
   },
   "repository": {
     "type": "git",
